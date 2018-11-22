@@ -2,8 +2,9 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Interfaces\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -11,8 +12,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table("user")
  * @ORM\Entity
  * @UniqueEntity("email")
+ * @UniqueEntity("username")
  */
-class User implements UserInterface
+final class User implements UserInterface
 {
     /**
      * @ORM\Column(type="integer")
@@ -39,52 +41,122 @@ class User implements UserInterface
      */
     private $email;
 
-    public function getId()
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isAdmin;
+
+    /**
+     * One product has many features. This is the inverse side.
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Task", mappedBy="user")
+     */
+    private $tasks;
+
+    /**
+     * User constructor.
+     */
+    public function __construct()
+    {
+        $this->isAdmin = false;
+        $this->features = new ArrayCollection();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUsername()
+    /**
+     * {@inheritdoc}
+     */
+    public function getUsername(): ?string
     {
         return $this->username;
     }
 
-    public function setUsername($username)
+    /**
+     * {@inheritdoc}
+     */
+    public function setUsername($username): void
     {
         $this->username = $username;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getSalt()
     {
         return null;
     }
 
-    public function getPassword()
+    /**
+     * {@inheritdoc}
+     */
+    public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function setPassword($password)
+    /**
+     * {@inheritdoc}
+     */
+    public function setPassword($password): void
     {
         $this->password = $password;
     }
 
-    public function getEmail()
+    /**
+     * {@inheritdoc}
+     */
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    public function setEmail($email)
+    /**
+     * {@inheritdoc}
+     */
+    public function setEmail($email): void
     {
         $this->email = $email;
     }
 
-    public function getRoles()
+    /**
+     * {@inheritdoc}
+     */
+    public function getRoles(): array
     {
+        if($this->getIsAdmin())
+        {
+            return array('ROLE_ADMIN');
+        }
         return array('ROLE_USER');
     }
 
-    public function eraseCredentials()
+    /**
+     * {@inheritdoc}
+     */
+    public function eraseCredentials(): void
     {
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getIsAdmin(): bool
+    {
+        return $this->isAdmin;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setIsAdmin(bool $isAdmin): void
+    {
+        $this->isAdmin = $isAdmin;
     }
 }

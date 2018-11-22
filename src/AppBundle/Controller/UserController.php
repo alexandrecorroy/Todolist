@@ -2,39 +2,44 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Interfaces\UserInterface;
 use AppBundle\Entity\User;
-use AppBundle\Form\UserType;
+use AppBundle\Form\Handler\Interfaces\UserRegistrationTypeHandlerInterface;
+use AppBundle\Form\Handler\Interfaces\UserUpdateTypeHandlerInterface;
+use AppBundle\Form\UserRegistrationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-class UserController extends Controller
+/**
+ * Class UserController.
+ */
+final class UserController extends Controller
 {
     /**
      * @Route("/users", name="user_list")
+     *
+     * {@inheritdoc}
      */
-    public function listAction()
+    public function listAction(): Response
     {
         return $this->render('user/list.html.twig', ['users' => $this->getDoctrine()->getRepository('AppBundle:User')->findAll()]);
     }
 
     /**
-     * @Route("/users/create", name="user_create")
+     * @Route("/users/create", name="user_create", methods={"GET","POST"})
+     *
+     * {@inheritdoc}
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, UserRegistrationTypeHandlerInterface $handler): Response
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserRegistrationType::class, $user);
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);
-
-            $em->persist($user);
-            $em->flush();
+        if ($handler->handle($form, $user)) {
 
             $this->addFlash('success', "L'utilisateur a bien été ajouté.");
 
@@ -45,19 +50,17 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/users/{id}/edit", name="user_edit")
+     * @Route("/users/{id}/edit", name="user_edit", methods={"GET","POST"})
+     *
+     * {@inheritdoc}
      */
-    public function editAction(User $user, Request $request)
+    public function editAction(UserInterface $user, Request $request, UserUpdateTypeHandlerInterface $handler): Response
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserRegistrationType::class, $user);
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $password = $this->get('security.password_encoder')->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);
-
-            $this->getDoctrine()->getManager()->flush();
+        if ($handler->handle($form, $user)) {
 
             $this->addFlash('success', "L'utilisateur a bien été modifié");
 

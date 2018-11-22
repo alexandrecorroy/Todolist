@@ -2,16 +2,23 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Controller\Interfaces\SecurityControllerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
 
-class SecurityController extends Controller
+/**
+ * Class SecurityController.
+ */
+final class SecurityController extends Controller implements SecurityControllerInterface
 {
     /**
      * @Route("/login", name="login")
+     *
+     * {@inheritdoc}
      */
-    public function loginAction(Request $request)
+    public function loginAction(Request $request): Response
     {
         $authenticationUtils = $this->get('security.authentication_utils');
 
@@ -22,21 +29,5 @@ class SecurityController extends Controller
             'last_username' => $lastUsername,
             'error'         => $error,
         ));
-    }
-
-    /**
-     * @Route("/login_check", name="login_check")
-     */
-    public function loginCheck()
-    {
-        // This code is never executed.
-    }
-
-    /**
-     * @Route("/logout", name="logout")
-     */
-    public function logoutCheck()
-    {
-        // This code is never executed.
     }
 }

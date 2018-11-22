@@ -3,37 +3,42 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Task;
-use AppBundle\Form\TaskType;
+use AppBundle\Form\Handler\Interfaces\TaskAddTypeHandlerInterface;
+use AppBundle\Form\TaskAddType;
+use AppBundle\Repository\Interfaces\TaskRepositoryInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-class TaskController extends Controller
+/**
+ * Class TaskController.
+ */
+final class TaskController extends Controller
 {
     /**
-     * @Route("/tasks", name="task_list")
+     * @Route("/tasks", name="task_list", methods={"GET"})
+     *
+     * {@inheritdoc}
      */
-    public function listAction()
+    public function listAction(): Response
     {
         return $this->render('task/list.html.twig', ['tasks' => $this->getDoctrine()->getRepository('AppBundle:Task')->findAll()]);
     }
 
     /**
-     * @Route("/tasks/create", name="task_create")
+     * @Route("/tasks/create", name="task_create", methods={"GET","POST"})
+     *
+     * {@inheritdoc}
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, TaskAddTypeHandlerInterface $handler): Response
     {
         $task = new Task();
-        $form = $this->createForm(TaskType::class, $task);
+        $form = $this->createForm(TaskAddType::class, $task);
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($task);
-            $em->flush();
-
+        if ($handler->handle($form, $task)) {
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
 
             return $this->redirectToRoute('task_list');
@@ -43,16 +48,17 @@ class TaskController extends Controller
     }
 
     /**
-     * @Route("/tasks/{id}/edit", name="task_edit")
+     * @Route("/tasks/{id}/edit", name="task_edit", methods={"GET","POST"})
+     *
+     * {@inheritdoc}
      */
-    public function editAction(Task $task, Request $request)
+    public function editAction(Task $task, Request $request, TaskAddTypeHandlerInterface $handler): Response
     {
-        $form = $this->createForm(TaskType::class, $task);
+        $form = $this->createForm(TaskAddType::class, $task);
 
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        if ($handler->handle($form, $task)) {
 
             $this->addFlash('success', 'La tâche a bien été modifiée.');
 
@@ -66,12 +72,15 @@ class TaskController extends Controller
     }
 
     /**
-     * @Route("/tasks/{id}/toggle", name="task_toggle")
+     * @Route("/tasks/{id}/toggle", name="task_toggle", methods={"GET"})
+     *
+     * {@inheritdoc}
      */
-    public function toggleTaskAction(Task $task)
+    public function toggleTaskAction(Task $task, TaskRepositoryInterface $repository): Response
     {
         $task->toggle(!$task->isDone());
-        $this->getDoctrine()->getManager()->flush();
+
+        $repository->flush();
 
         $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
 
@@ -79,13 +88,13 @@ class TaskController extends Controller
     }
 
     /**
-     * @Route("/tasks/{id}/delete", name="task_delete")
+     * @Route("/tasks/{id}/delete", name="task_delete", methods={"GET"})
+     *
+     * {@inheritdoc}
      */
-    public function deleteTaskAction(Task $task)
+    public function deleteTaskAction(Task $task, TaskRepositoryInterface $repository): Response
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($task);
-        $em->flush();
+        $repository->delete($task);
 
         $this->addFlash('success', 'La tâche a bien été supprimée.');
 
