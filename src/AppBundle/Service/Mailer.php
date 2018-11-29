@@ -36,6 +36,9 @@ final class Mailer implements MailerInterface
      */
     private $mailerFrom;
 
+    /**
+     * {@inheritdoc}
+     */
     public function __construct(
         \Twig_Environment $twig,
         \Swift_Mailer $mailer,
@@ -46,6 +49,9 @@ final class Mailer implements MailerInterface
         $this->mailerFrom = $mailerFrom;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function sendMail(
         UserInterface $user,
         $subject,
@@ -68,6 +74,9 @@ final class Mailer implements MailerInterface
         $this->mailer->send($message);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getMailerFrom(): string
     {
         return $this->mailerFrom;

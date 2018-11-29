@@ -31,7 +31,7 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
     /**
      * @param $username
      */
-    public function setUsername($username): void;
+    public function setUsername(string $username): void;
 
     /**
      * @return string|null
@@ -41,7 +41,7 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
     /**
      * @param $password
      */
-    public function setPassword($password): void;
+    public function setPassword(string $password): void;
 
     /**
      * @return string|null
@@ -51,7 +51,7 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
     /**
      * @param $email
      */
-    public function setEmail($email): void;
+    public function setEmail(string $email): void;
 
     /**
      * @return array
@@ -67,4 +67,8 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
      * @param bool $isAdmin
      */
     public function setIsAdmin(bool $isAdmin): void;
+
+    public function setToken(string $token): void;
+
+    public function getToken(): string;
 }

@@ -26,3 +26,8 @@ services:
   AppBundle\Service\Mailer:
     arguments:
       $mailerFrom: '%mailer_from%'
+
+  AppBundle\DoctrineListener\CanRemoveTaskDoctrineListener:
+    tags:
+      - { name: doctrine.event_listener, event: preRemove }
+    

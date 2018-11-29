@@ -29,9 +29,9 @@ interface TaskInterface
     public function getCreatedAt(): string;
 
     /**
-     * @param $createdAt
+     * @param string $createdAt
      */
-    public function setCreatedAt($createdAt): void;
+    public function setCreatedAt(string $createdAt): void;
 
     /**
      * @return string|null
@@ -39,9 +39,9 @@ interface TaskInterface
     public function getTitle(): ?string;
 
     /**
-     * @param $title
+     * @param string $title
      */
-    public function setTitle($title): void;
+    public function setTitle(string $title): void;
 
     /**
      * @return string|null
@@ -49,9 +49,9 @@ interface TaskInterface
     public function getContent(): ?string;
 
     /**
-     * @param $content
+     * @param string $content
      */
-    public function setContent($content): void;
+    public function setContent(string $content): void;
 
     /**
      * @return bool
@@ -59,7 +59,17 @@ interface TaskInterface
     public function isDone(): bool;
 
     /**
-     * @param $flag
+     * @param bool $flag
      */
-    public function toggle($flag): void;
+    public function toggle(bool $flag): void;
+
+    /**
+     * @return UserInterface|null
+     */
+    public function getUser(): ?UserInterface;
+
+    /**
+     * @param UserInterface $user
+     */
+    public function setUser(UserInterface $user): void;
 }

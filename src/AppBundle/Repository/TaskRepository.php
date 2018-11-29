@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Interfaces\TaskInterface;
+use AppBundle\Entity\Interfaces\UserInterface;
 use AppBundle\Entity\Task;
 use AppBundle\Repository\Interfaces\TaskRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -24,6 +25,15 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 final class TaskRepository extends ServiceEntityRepository implements TaskRepositoryInterface
 {
+    /**
+     * const when task is done
+     */
+    const IS_DONE = 1;
+
+    /**
+     * const when task is not done
+     */
+    const IS_NOT_DONE = 0;
     /**
      * {@inheritdoc}
      */
@@ -57,9 +67,39 @@ final class TaskRepository extends ServiceEntityRepository implements TaskReposi
      */
     public function delete(TaskInterface $task): void
     {
-        dump($task);
-        die;
         $this->_em->remove($task);
         $this::flush();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findAllTaskAreDone(UserInterface $user): ?array
+    {
+        $query = $this->createQueryBuilder('t')
+            ->where('t.isDone = :isDone')
+            ->setParameters([
+                'isDone' => $this::IS_DONE
+            ])
+            ->getQuery()
+            ->getResult();
+
+        return $query;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findAllTaskNotDone(UserInterface $user): ?array
+    {
+        $query = $this->createQueryBuilder('t')
+            ->where('t.isDone = :isDone')
+            ->setParameters([
+                'isDone' => $this::IS_NOT_DONE
+            ])
+            ->getQuery()
+            ->getResult();
+
+        return $query;
     }
 }

@@ -21,6 +21,19 @@ use AppBundle\Entity\Interfaces\UserInterface;
 interface MailerInterface
 {
     /**
+     * MailerInterface constructor.
+     *
+     * @param \Twig_Environment $twig
+     * @param \Swift_Mailer $mailer
+     * @param $mailerFrom
+     */
+    public function __construct(
+        \Twig_Environment $twig,
+        \Swift_Mailer $mailer,
+        $mailerFrom
+    );
+
+    /**
      * @param UserInterface $user
      * @param $subject
      * @param $template

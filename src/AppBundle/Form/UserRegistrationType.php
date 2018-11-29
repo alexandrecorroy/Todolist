@@ -2,7 +2,6 @@
 
 namespace AppBundle\Form;
 
-use AppBundle\Form\Interfaces\UserRegistrationTypeInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -12,10 +11,11 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 /**
  * Class UserRegistrationType.
  */
-final class UserRegistrationType extends AbstractType implements UserRegistrationTypeInterface
+final class UserRegistrationType extends AbstractType
 {
     /**
-     * {@inheritdoc}
+     * @param FormBuilderInterface $builder
+     * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

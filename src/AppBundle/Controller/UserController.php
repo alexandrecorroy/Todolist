@@ -2,12 +2,11 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Interfaces\UserInterface;
 use AppBundle\Entity\User;
 use AppBundle\Form\Handler\Interfaces\UserRegistrationTypeHandlerInterface;
 use AppBundle\Form\Handler\Interfaces\UserUpdateTypeHandlerInterface;
-use AppBundle\Form\UserRegistrationType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use AppBundle\Repository\Interfaces\UserRepositoryInterface;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,9 +21,9 @@ final class UserController extends Controller
      *
      * {@inheritdoc}
      */
-    public function listAction(): Response
+    public function listAction(UserRepositoryInterface $repository): Response
     {
-        return $this->render('user/list.html.twig', ['users' => $this->getDoctrine()->getRepository('AppBundle:User')->findAll()]);
+        return $this->render('user/list.html.twig', ['users' => $repository->listUsers()]);
     }
 
     /**
@@ -35,9 +34,8 @@ final class UserController extends Controller
     public function createAction(Request $request, UserRegistrationTypeHandlerInterface $handler): Response
     {
         $user = new User();
-        $form = $this->createForm(UserRegistrationType::class, $user);
 
-        $form->handleRequest($request);
+        $form = $handler->createForm($request, $user);
 
         if ($handler->handle($form, $user)) {
 
@@ -50,15 +48,13 @@ final class UserController extends Controller
     }
 
     /**
-     * @Route("/users/{id}/edit", name="user_edit", methods={"GET","POST"})
+     * @Route("/users/{id}/edit", name="user_edit", requirements={"id"="\d+"}, methods={"GET","POST"})
      *
      * {@inheritdoc}
      */
-    public function editAction(UserInterface $user, Request $request, UserUpdateTypeHandlerInterface $handler): Response
+    public function editAction(User $user, Request $request, UserUpdateTypeHandlerInterface $handler): Response
     {
-        $form = $this->createForm(UserRegistrationType::class, $user);
-
-        $form->handleRequest($request);
+        $form = $handler->createForm($request, $user);
 
         if ($handler->handle($form, $user)) {
 

@@ -30,7 +30,7 @@ final class PasswordGenerator implements PasswordGeneratorInterface
      */
     public function generate(): string
     {
-        $data = '1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcefghijklmnopqrstuvwxyz';
+        $data = '1234567890ABCDEFGHJKLMNPQRSTUVWXYZabcefghijkmnopqrstuvwxyz';
 
         return substr(str_shuffle($data), 0, $this::LENGTH_PASSWORD);
     }

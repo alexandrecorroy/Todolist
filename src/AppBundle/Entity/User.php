@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity("email")
  * @UniqueEntity("username")
  */
-final class User implements UserInterface
+class User implements UserInterface
 {
     /**
      * @ORM\Column(type="integer")
@@ -48,9 +48,14 @@ final class User implements UserInterface
 
     /**
      * One product has many features. This is the inverse side.
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Task", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Task", mappedBy="user", orphanRemoval=true)
      */
     private $tasks;
+
+    /**
+     * @ORM\Column(type="string", length=128, unique=true, nullable=true)
+     */
+    private $token;
 
     /**
      * User constructor.
@@ -58,7 +63,7 @@ final class User implements UserInterface
     public function __construct()
     {
         $this->isAdmin = false;
-        $this->features = new ArrayCollection();
+        $this->tasks = new ArrayCollection();
     }
 
     /**
@@ -80,7 +85,7 @@ final class User implements UserInterface
     /**
      * {@inheritdoc}
      */
-    public function setUsername($username): void
+    public function setUsername(string $username): void
     {
         $this->username = $username;
     }
@@ -104,7 +109,7 @@ final class User implements UserInterface
     /**
      * {@inheritdoc}
      */
-    public function setPassword($password): void
+    public function setPassword(string $password): void
     {
         $this->password = $password;
     }
@@ -120,7 +125,7 @@ final class User implements UserInterface
     /**
      * {@inheritdoc}
      */
-    public function setEmail($email): void
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
@@ -158,5 +163,21 @@ final class User implements UserInterface
     public function setIsAdmin(bool $isAdmin): void
     {
         $this->isAdmin = $isAdmin;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setToken(string $token): void
+    {
+        $this->token = $token;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getToken(): string
+    {
+        return $this->token;
     }
 }

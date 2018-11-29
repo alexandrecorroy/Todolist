@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @ORM\Table
  */
-final class Task implements TaskInterface
+class Task implements TaskInterface
 {
     /**
      * @ORM\Column(type="integer")
@@ -45,7 +45,7 @@ final class Task implements TaskInterface
     /**
      * Many features have one product. This is the owning side.
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="tasks")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
     private $user;
 
@@ -61,9 +61,14 @@ final class Task implements TaskInterface
     /**
      * {@inheritdoc}
      */
-    public function addUser(UserInterface $user)
+    public function setUser(UserInterface $user): void
     {
         $this->user = $user;
+    }
+
+    public function getUser(): ?UserInterface
+    {
+        return $this->user;
     }
 
     /**
@@ -85,7 +90,7 @@ final class Task implements TaskInterface
     /**
      * {@inheritdoc}
      */
-    public function setCreatedAt($createdAt): void
+    public function setCreatedAt(string $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
@@ -101,7 +106,7 @@ final class Task implements TaskInterface
     /**
      * {@inheritdoc}
      */
-    public function setTitle($title): void
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
@@ -117,7 +122,7 @@ final class Task implements TaskInterface
     /**
      * {@inheritdoc}
      */
-    public function setContent($content): void
+    public function setContent(string $content): void
     {
         $this->content = $content;
     }
@@ -133,7 +138,7 @@ final class Task implements TaskInterface
     /**
      * {@inheritdoc}
      */
-    public function toggle($flag): void
+    public function toggle(bool $flag): void
     {
         $this->isDone = $flag;
     }

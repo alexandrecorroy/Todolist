@@ -43,4 +43,48 @@ final class UserRepository extends ServiceEntityRepository implements UserReposi
         }
         $this->_em->flush();
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUserByEmail($email): ?UserInterface
+    {
+        $query = $this->createQueryBuilder('u')
+            ->where('u.email = :email')
+            ->setParameters([
+                'email' => $email
+            ])
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        return $query;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUserByToken($token): ?UserInterface
+    {
+        $query = $this->createQueryBuilder('u')
+            ->where('u.token = :token')
+            ->setParameters([
+                'token' => $token
+            ])
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        return $query;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function listUsers(): ?array
+    {
+        $query = $this->createQueryBuilder('u')
+            ->getQuery()
+            ->getResult();
+
+        return $query;
+    }
 }

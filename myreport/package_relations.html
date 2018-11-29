@@ -49,7 +49,7 @@
 <div class="page">
     <div class="content">
         <div class="report-details">
-            Created at 2018-11-22 15:10:04        , with PHPMetrics v2.4.1 (<a href="https://twitter.com/Halleck45">Jean-François Lépine</a>).
+            Created at 2018-11-29 12:38:58        , with PHPMetrics v2.4.1 (<a href="https://twitter.com/Halleck45">Jean-François Lépine</a>).
         </div>
 
 
@@ -255,13 +255,11 @@
         "size": 3000,
         "relations": [
             "Symfony\\Bundle\\FrameworkBundle\\Controller",
-            "AppBundle\\Controller\\Interfaces",
             "Symfony\\Component\\HttpFoundation",
-            "Sensio\\Bundle\\FrameworkExtraBundle\\Configuration",
+            "Symfony\\Component\\Routing\\Annotation",
             "AppBundle\\Form\\Handler\\Interfaces",
-            "AppBundle\\Entity",
             "AppBundle\\Repository\\Interfaces",
-            "AppBundle\\Entity\\Interfaces"
+            "AppBundle\\Entity"
         ]
     },
     {
@@ -270,23 +268,12 @@
         "relations": []
     },
     {
-        "name": "AppBundle\\Controller\\Interfaces",
-        "size": 3000,
-        "relations": [
-            "Symfony\\Component\\HttpFoundation",
-            "AppBundle\\Form\\Handler\\Interfaces",
-            "AppBundle\\Entity",
-            "AppBundle\\Repository\\Interfaces",
-            "AppBundle\\Entity\\Interfaces"
-        ]
-    },
-    {
         "name": "Symfony\\Component\\HttpFoundation",
         "size": 3000,
         "relations": []
     },
     {
-        "name": "Sensio\\Bundle\\FrameworkExtraBundle\\Configuration",
+        "name": "Symfony\\Component\\Routing\\Annotation",
         "size": 3000,
         "relations": []
     },
@@ -296,17 +283,12 @@
         "relations": [
             "AppBundle\\Repository\\Interfaces",
             "Symfony\\Component\\Form",
-            "AppBundle\\Entity\\Interfaces",
+            "AppBundle\\Service\\Interfaces",
+            "AppBundle\\Service",
+            "Symfony\\Component\\HttpFoundation",
             "Symfony\\Component\\Security\\Core\\Encoder",
-            "AppBundle\\Service\\Interfaces"
-        ]
-    },
-    {
-        "name": "AppBundle\\Entity",
-        "size": 3000,
-        "relations": [
-            "AppBundle\\Entity\\Interfaces",
-            "global"
+            "Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage",
+            "AppBundle\\Entity\\Interfaces"
         ]
     },
     {
@@ -316,6 +298,39 @@
             "Symfony\\Bridge\\Doctrine",
             "AppBundle\\Entity\\Interfaces"
         ]
+    },
+    {
+        "name": "AppBundle\\Entity",
+        "size": 3000,
+        "relations": [
+            "AppBundle\\Entity\\Interfaces",
+            "global",
+            "Doctrine\\Common\\Collections"
+        ]
+    },
+    {
+        "name": "AppBundle\\DoctrineListener",
+        "size": 3000,
+        "relations": [
+            "Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage",
+            "Doctrine\\ORM\\Event",
+            "Symfony\\Component\\Security\\Core\\Exception"
+        ]
+    },
+    {
+        "name": "Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "Doctrine\\ORM\\Event",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "Symfony\\Component\\Security\\Core\\Exception",
+        "size": 3000,
+        "relations": []
     },
     {
         "name": "AppBundle\\Entity\\Interfaces",
@@ -335,21 +350,21 @@
         "relations": []
     },
     {
+        "name": "Doctrine\\Common\\Collections",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "AppBundle\\Form",
+        "size": 3000,
+        "relations": [
+            "Symfony\\Component\\Form"
+        ]
+    },
+    {
         "name": "Symfony\\Component\\Form",
         "size": 3000,
         "relations": []
-    },
-    {
-        "name": "Symfony\\Component\\Security\\Core\\Encoder",
-        "size": 3000,
-        "relations": []
-    },
-    {
-        "name": "AppBundle\\Service\\Interfaces",
-        "size": 3000,
-        "relations": [
-            "AppBundle\\Entity\\Interfaces"
-        ]
     },
     {
         "name": "AppBundle\\Form\\Handler",
@@ -358,25 +373,35 @@
             "AppBundle\\Form\\Handler\\Interfaces",
             "AppBundle\\Repository\\Interfaces",
             "Symfony\\Component\\Form",
-            "AppBundle\\Entity\\Interfaces",
+            "AppBundle\\Service\\Interfaces",
+            "AppBundle\\Service",
+            "Symfony\\Component\\HttpFoundation",
             "Symfony\\Component\\Security\\Core\\Encoder",
-            "AppBundle\\Service\\Interfaces"
+            "Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage",
+            "AppBundle\\Entity\\Interfaces"
         ]
     },
     {
-        "name": "AppBundle\\Form\\Interfaces",
+        "name": "AppBundle\\Service\\Interfaces",
         "size": 3000,
         "relations": [
-            "Symfony\\Component\\Form"
+            "global",
+            "AppBundle\\Entity\\Interfaces"
         ]
     },
     {
-        "name": "AppBundle\\Form",
+        "name": "AppBundle\\Service",
         "size": 3000,
         "relations": [
-            "Symfony\\Component\\Form",
-            "AppBundle\\Form\\Interfaces"
+            "AppBundle\\Service\\Interfaces",
+            "global",
+            "AppBundle\\Entity\\Interfaces"
         ]
+    },
+    {
+        "name": "Symfony\\Component\\Security\\Core\\Encoder",
+        "size": 3000,
+        "relations": []
     },
     {
         "name": "Symfony\\Bridge\\Doctrine",
@@ -398,15 +423,6 @@
         "name": "Doctrine\\Bundle\\DoctrineBundle\\Repository",
         "size": 3000,
         "relations": []
-    },
-    {
-        "name": "AppBundle\\Service",
-        "size": 3000,
-        "relations": [
-            "AppBundle\\Service\\Interfaces",
-            "global",
-            "AppBundle\\Entity\\Interfaces"
-        ]
     }
 ];
 

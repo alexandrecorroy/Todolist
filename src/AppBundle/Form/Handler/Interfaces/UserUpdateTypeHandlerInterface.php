@@ -16,7 +16,9 @@ namespace AppBundle\Form\Handler\Interfaces;
 use AppBundle\Entity\Interfaces\UserInterface;
 use AppBundle\Repository\Interfaces\UserRepositoryInterface;
 use AppBundle\Service\Interfaces\MailerInterface;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Interface UserUpdateTypeHandler.
@@ -24,14 +26,16 @@ use Symfony\Component\Form\FormInterface;
 interface UserUpdateTypeHandlerInterface
 {
     /**
-     * UserUpdateTypeHandler constructor.
+     * UserUpdateTypeHandlerInterface constructor.
      *
      * @param UserRepositoryInterface $repository
      * @param MailerInterface $mailer
+     * @param FormFactoryInterface $formFactory
      */
     public function __construct(
         UserRepositoryInterface $repository,
-        MailerInterface $mailer
+        MailerInterface $mailer,
+        FormFactoryInterface $formFactory
     );
 
     /**
@@ -44,4 +48,15 @@ interface UserUpdateTypeHandlerInterface
         FormInterface $form,
         UserInterface $user
     ): bool;
+
+    /**
+     * @param Request $request
+     * @param UserInterface $user
+     *
+     * @return FormInterface
+     */
+    public function createForm(
+        Request $request,
+        UserInterface $user
+    ): FormInterface;
 }

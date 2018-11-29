@@ -17,7 +17,9 @@ use AppBundle\Entity\Interfaces\UserInterface;
 use AppBundle\Repository\Interfaces\UserRepositoryInterface;
 use AppBundle\Service\Interfaces\MailerInterface;
 use AppBundle\Service\Interfaces\PasswordGeneratorInterface;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 /**
@@ -27,17 +29,18 @@ interface UserRegistrationTypeHandlerInterface
 {
     /**
      * UserRegistrationTypeHandlerInterface constructor.
-     *
      * @param EncoderFactoryInterface $encoder
      * @param UserRepositoryInterface $repository
      * @param PasswordGeneratorInterface $passwordGenerator
      * @param MailerInterface $mailer
+     * @param FormFactoryInterface $formFactory
      */
     public function __construct(
         EncoderFactoryInterface $encoder,
         UserRepositoryInterface $repository,
         PasswordGeneratorInterface $passwordGenerator,
-        MailerInterface $mailer
+        MailerInterface $mailer,
+        FormFactoryInterface $formFactory
     );
 
     /**
@@ -50,4 +53,16 @@ interface UserRegistrationTypeHandlerInterface
         FormInterface $form,
         UserInterface $user
     ): bool;
+
+    /**
+     * @param Request $request
+     * @param UserInterface $user
+     *
+     * @return FormInterface
+     */
+    public function createForm(
+        Request $request,
+        UserInterface $user
+    ): FormInterface;
+
 }

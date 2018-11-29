@@ -32,4 +32,23 @@ interface UserRepositoryInterface
      * @param UserInterface $user
      */
     public function save(UserInterface $user): void;
+
+    /**
+     * @param $email
+     *
+     * @return UserInterface|null
+     */
+    public function getUserByEmail($email): ?UserInterface;
+
+    /**
+     * @param $token
+     *
+     * @return UserInterface|null
+     */
+    public function getUserByToken($token): ?UserInterface;
+
+    /**
+     * @return array|null
+     */
+    public function listUsers(): ?array;
 }

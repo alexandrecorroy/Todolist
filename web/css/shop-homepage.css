@@ -24,6 +24,7 @@ body {
 .caption {
     height: 130px;
     overflow: hidden;
+    margin: 0 0 20px 0 !important;
 }
 
 .caption h4 {
@@ -51,4 +52,21 @@ body {
 
 footer {
     margin: 50px 0;
+}
+
+.bottom-align-text{
+    bottom: 10px;
+    position: absolute;
+}
+
+@media only screen and (min-width: 768px) {
+    .dropdown:hover .dropdown-menu {
+        display: block;
+    }
+}
+
+.bottom-align-right{
+    padding-bottom: 20px;
+    right: 0;
+    position: absolute;
 }

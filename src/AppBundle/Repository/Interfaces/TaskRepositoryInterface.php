@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace AppBundle\Repository\Interfaces;
 
 use AppBundle\Entity\Interfaces\TaskInterface;
+use AppBundle\Entity\Interfaces\UserInterface;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -42,4 +43,18 @@ interface TaskRepositoryInterface
      * save to bdd
      */
     public function flush(): void;
+
+    /**
+     * @param UserInterface $user
+     *
+     * @return array|null
+     */
+    public function findAllTaskAreDone(UserInterface $user): ?array;
+
+    /**
+     * @param UserInterface $user
+     *
+     * @return array|null
+     */
+    public function findAllTaskNotDone(UserInterface $user): ?array;
 }

@@ -16,10 +16,13 @@ namespace AppBundle\Form\Handler;
 use AppBundle\Entity\Interfaces\UserInterface;
 use AppBundle\Entity\User;
 use AppBundle\Form\Handler\Interfaces\UserRegistrationTypeHandlerInterface;
+use AppBundle\Form\UserRegistrationType;
 use AppBundle\Repository\Interfaces\UserRepositoryInterface;
 use AppBundle\Service\Interfaces\MailerInterface;
 use AppBundle\Service\Interfaces\PasswordGeneratorInterface;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 /**
@@ -48,18 +51,25 @@ final class UserRegistrationTypeHandler implements UserRegistrationTypeHandlerIn
     private $mailer;
 
     /**
+     * @var FormFactoryInterface
+     */
+    private $formFactory;
+
+    /**
      * {@inheritdoc}
      */
     public function __construct(
         EncoderFactoryInterface $encoder,
         UserRepositoryInterface $repository,
         PasswordGeneratorInterface $passwordGenerator,
-        MailerInterface $mailer
+        MailerInterface $mailer,
+        FormFactoryInterface $formFactory
     ) {
         $this->encoder           = $encoder;
         $this->repository        = $repository;
         $this->passwordGenerator = $passwordGenerator;
         $this->mailer            = $mailer;
+        $this->formFactory       = $formFactory;
     }
 
     /**
@@ -89,4 +99,15 @@ final class UserRegistrationTypeHandler implements UserRegistrationTypeHandlerIn
         return false;
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function createForm(
+        Request $request,
+        UserInterface $user
+    ): FormInterface {
+        $form = $this->formFactory->create(UserRegistrationType::class, $user);
+
+        return $form->handleRequest($request);
+    }
 }

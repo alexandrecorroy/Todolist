@@ -15,10 +15,16 @@ namespace AppBundle\Form\Handler;
 
 use AppBundle\Entity\Interfaces\UserInterface;
 use AppBundle\Form\Handler\Interfaces\UserUpdateTypeHandlerInterface;
+use AppBundle\Form\UserRegistrationType;
 use AppBundle\Repository\Interfaces\UserRepositoryInterface;
 use AppBundle\Service\Interfaces\MailerInterface;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Class UserUpdateTypeHandler.
+ */
 final class UserUpdateTypeHandler implements UserUpdateTypeHandlerInterface
 {
     /**
@@ -32,14 +38,21 @@ final class UserUpdateTypeHandler implements UserUpdateTypeHandlerInterface
     private $mailer;
 
     /**
+     * @var FormFactoryInterface
+     */
+    private $formFactory;
+
+    /**
      * {@inheritdoc}
      */
     public function __construct(
     UserRepositoryInterface $repository,
-    MailerInterface $mailer
+    MailerInterface $mailer,
+    FormFactoryInterface $formFactory
     ) {
-        $this->repository        = $repository;
-        $this->mailer            = $mailer;
+        $this->repository  = $repository;
+        $this->mailer      = $mailer;
+        $this->formFactory = $formFactory;
     }
 
     /**
@@ -58,5 +71,17 @@ final class UserUpdateTypeHandler implements UserUpdateTypeHandlerInterface
             return true;
         }
         return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function createForm(
+        Request $request,
+        UserInterface $user
+    ): FormInterface {
+        $form = $this->formFactory->create(UserRegistrationType::class, $user);
+
+        return $form->handleRequest($request);
     }
 }
