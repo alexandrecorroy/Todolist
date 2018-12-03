@@ -16,6 +16,9 @@ final class SecurityController extends Controller
 {
     /**
      * @Route("/login", name="login")
+     *
+     * @param Request $request
+     * @return Response
      */
     public function loginAction(Request $request): Response
     {
@@ -32,6 +35,10 @@ final class SecurityController extends Controller
 
     /**
      * @Route("/forgotPassword", name="forgot_password")
+     *
+     * @param Request $request
+     * @param ForgotPasswordTypeHandlerInterface $handler
+     * @return Response
      */
     public function forgotPasswordAction(Request $request, ForgotPasswordTypeHandlerInterface $handler): Response
     {
@@ -49,6 +56,10 @@ final class SecurityController extends Controller
 
     /**
      * @Route("/resetPassword/{token}", name="reset_password")
+     *
+     * @param Request $request
+     * @param ResetPasswordTypeHandlerInterface $handler
+     * @return Response
      */
     public function resetPasswordAction(Request $request, ResetPasswordTypeHandlerInterface $handler): Response
     {

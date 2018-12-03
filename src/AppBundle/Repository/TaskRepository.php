@@ -26,15 +26,6 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 final class TaskRepository extends ServiceEntityRepository implements TaskRepositoryInterface
 {
     /**
-     * const when task is done
-     */
-    const IS_DONE = 1;
-
-    /**
-     * const when task is not done
-     */
-    const IS_NOT_DONE = 0;
-    /**
      * {@inheritdoc}
      */
     public function __construct(RegistryInterface $registry)
@@ -79,7 +70,7 @@ final class TaskRepository extends ServiceEntityRepository implements TaskReposi
         $query = $this->createQueryBuilder('t')
             ->where('t.isDone = :isDone')
             ->setParameters([
-                'isDone' => $this::IS_DONE
+                'isDone' => Task::IS_DONE
             ])
             ->getQuery()
             ->getResult();
@@ -95,7 +86,7 @@ final class TaskRepository extends ServiceEntityRepository implements TaskReposi
         $query = $this->createQueryBuilder('t')
             ->where('t.isDone = :isDone')
             ->setParameters([
-                'isDone' => $this::IS_NOT_DONE
+                'isDone' => Task::IS_NOT_DONE
             ])
             ->getQuery()
             ->getResult();

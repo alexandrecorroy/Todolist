@@ -15,7 +15,7 @@ namespace AppBundle\Form\Handler\Interfaces;
 
 use AppBundle\Repository\Interfaces\UserRepositoryInterface;
 use AppBundle\Service\Interfaces\MailerInterface;
-use AppBundle\Service\TokenGenerator;
+use AppBundle\Service\Interfaces\TokenGeneratorInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,13 +31,13 @@ interface ForgotPasswordTypeHandlerInterface
      * @param UserRepositoryInterface $repository
      * @param FormFactoryInterface $form
      * @param MailerInterface $mailer
-     * @param TokenGenerator $token
+     * @param TokenGeneratorInterface $token
      */
     public function __construct(
         UserRepositoryInterface $repository,
         FormFactoryInterface $form,
         MailerInterface $mailer,
-        TokenGenerator $token
+        TokenGeneratorInterface $token
     );
 
     /**

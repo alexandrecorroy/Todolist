@@ -24,14 +24,14 @@ interface TaskInterface
     public function getId(): ?int;
 
     /**
-     * @return string
+     * @return \DateTime
      */
-    public function getCreatedAt(): string;
+    public function getCreatedAt(): \DateTime;
 
     /**
-     * @param string $createdAt
+     * @param \DateTime $createdAt
      */
-    public function setCreatedAt(string $createdAt): void;
+    public function setCreatedAt(\DateTime $createdAt): void;
 
     /**
      * @return string|null

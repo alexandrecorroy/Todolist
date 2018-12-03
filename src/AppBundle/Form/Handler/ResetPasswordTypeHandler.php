@@ -17,7 +17,7 @@ use AppBundle\Form\Handler\Interfaces\ResetPasswordTypeHandlerInterface;
 use AppBundle\Form\ResetPasswordType;
 use AppBundle\Repository\Interfaces\UserRepositoryInterface;
 use AppBundle\Service\Interfaces\MailerInterface;
-use AppBundle\Service\TokenGenerator;
+use AppBundle\Service\Interfaces\TokenGeneratorInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,7 +44,7 @@ final class ResetPasswordTypeHandler implements ResetPasswordTypeHandlerInterfac
     private $mailer;
 
     /**
-     * @var TokenGenerator
+     * @var TokenGeneratorInterface
      */
     private $token;
 
@@ -60,7 +60,7 @@ final class ResetPasswordTypeHandler implements ResetPasswordTypeHandlerInterfac
         UserRepositoryInterface $repository,
         FormFactoryInterface $form,
         MailerInterface $mailer,
-        TokenGenerator $token,
+        TokenGeneratorInterface $token,
         EncoderFactoryInterface $encoder
     ) {
         $this->repository   = $repository;

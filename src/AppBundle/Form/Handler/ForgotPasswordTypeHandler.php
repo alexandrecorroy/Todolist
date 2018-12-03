@@ -17,7 +17,7 @@ use AppBundle\Form\ForgotPasswordType;
 use AppBundle\Form\Handler\Interfaces\ForgotPasswordTypeHandlerInterface;
 use AppBundle\Repository\Interfaces\UserRepositoryInterface;
 use AppBundle\Service\Interfaces\MailerInterface;
-use AppBundle\Service\TokenGenerator;
+use AppBundle\Service\Interfaces\TokenGeneratorInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,7 +43,7 @@ final class ForgotPasswordTypeHandler implements ForgotPasswordTypeHandlerInterf
     private $mailer;
 
     /**
-     * @var TokenGenerator
+     * @var TokenGeneratorInterface
      */
     private $token;
 
@@ -54,7 +54,7 @@ final class ForgotPasswordTypeHandler implements ForgotPasswordTypeHandlerInterf
         UserRepositoryInterface $repository,
         FormFactoryInterface $form,
         MailerInterface $mailer,
-        TokenGenerator $token
+        TokenGeneratorInterface $token
     ) {
         $this->repository   = $repository;
         $this->form         = $form;

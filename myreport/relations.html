@@ -49,7 +49,7 @@
 <div class="page">
     <div class="content">
         <div class="report-details">
-            Created at 2018-11-29 12:38:58        , with PHPMetrics v2.4.1 (<a href="https://twitter.com/Halleck45">Jean-François Lépine</a>).
+            Created at 2018-12-03 13:27:57        , with PHPMetrics v2.4.1 (<a href="https://twitter.com/Halleck45">Jean-François Lépine</a>).
         </div>
 
 
@@ -92,7 +92,7 @@
                             <path d="M0 0h24v24H0z" fill="none"/>
                             <path d="M20 8h-2.81c-.45-.78-1.07-1.45-1.82-1.96L17 4.41 15.59 3l-2.17 2.17C12.96 5.06 12.49 5 12 5c-.49 0-.96.06-1.41.17L8.41 3 7 4.41l1.62 1.63C7.88 6.55 7.26 7.22 6.81 8H4v2h2.09c-.05.33-.09.66-.09 1v1H4v2h2v1c0 .34.04.67.09 1H4v2h2.81c1.04 1.79 2.97 3 5.19 3s4.15-1.21 5.19-3H20v-2h-2.09c.05-.33.09-.66.09-1v-1h2v-2h-2v-1c0-.34-.04-.67-.09-1H20V8zm-6 8h-4v-2h4v2zm0-4h-4v-2h4v2z"/>
                         </svg>
-                        Violations (2)
+                        Violations (1)
                     </a>
                 </li>
                                 <li>
@@ -330,7 +330,8 @@
         "relations": [
             "\\AppBundle\\Entity\\Interfaces\\TaskInterface",
             "\\Datetime",
-            "\\AppBundle\\Entity\\Interfaces\\UserInterface"
+            "\\AppBundle\\Entity\\Interfaces\\UserInterface",
+            "\\DateTime"
         ]
     },
     {
@@ -410,6 +411,11 @@
         "relations": []
     },
     {
+        "name": "\\DateTime",
+        "size": 3000,
+        "relations": []
+    },
+    {
         "name": "\\Doctrine\\Common\\Collections\\ArrayCollection",
         "size": 3000,
         "relations": []
@@ -440,7 +446,7 @@
             "\\AppBundle\\Repository\\Interfaces\\UserRepositoryInterface",
             "\\Symfony\\Component\\Form\\FormFactoryInterface",
             "\\AppBundle\\Service\\Interfaces\\MailerInterface",
-            "\\AppBundle\\Service\\TokenGenerator",
+            "\\AppBundle\\Service\\Interfaces\\TokenGeneratorInterface",
             "\\Symfony\\Component\\Form\\FormInterface",
             "\\Symfony\\Component\\HttpFoundation\\Request"
         ]
@@ -456,12 +462,9 @@
         "relations": []
     },
     {
-        "name": "\\AppBundle\\Service\\TokenGenerator",
+        "name": "\\AppBundle\\Service\\Interfaces\\TokenGeneratorInterface",
         "size": 3000,
-        "relations": [
-            "\\AppBundle\\Service\\Interfaces\\TokenGeneratorInterface",
-            "\\AppBundle\\Entity\\Interfaces\\UserInterface"
-        ]
+        "relations": []
     },
     {
         "name": "\\Symfony\\Component\\Form\\FormInterface",
@@ -476,7 +479,7 @@
             "\\AppBundle\\Repository\\Interfaces\\UserRepositoryInterface",
             "\\Symfony\\Component\\Form\\FormFactoryInterface",
             "\\AppBundle\\Service\\Interfaces\\MailerInterface",
-            "\\AppBundle\\Service\\TokenGenerator",
+            "\\AppBundle\\Service\\Interfaces\\TokenGeneratorInterface",
             "\\Symfony\\Component\\Security\\Core\\Encoder\\EncoderFactoryInterface",
             "\\Symfony\\Component\\Form\\FormInterface",
             "\\Symfony\\Component\\HttpFoundation\\Request"
@@ -635,9 +638,12 @@
         ]
     },
     {
-        "name": "\\AppBundle\\Service\\Interfaces\\TokenGeneratorInterface",
+        "name": "\\AppBundle\\Service\\TokenGenerator",
         "size": 3000,
-        "relations": []
+        "relations": [
+            "\\AppBundle\\Service\\Interfaces\\TokenGeneratorInterface",
+            "\\AppBundle\\Entity\\Interfaces\\UserInterface"
+        ]
     }
 ];
 

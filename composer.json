@@ -4,7 +4,18 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "": "src/"
+            "": "src/",
+            "AppBundle\\Controller\\": "src/Controller/",
+            "AppBundle\\DoctrineListener\\": "src/DoctrineListener/",
+            "AppBundle\\Entity\\": "src/Entity/",
+            "AppBundle\\Entity\\Interfaces\\": "src/Entity/Interfaces/",
+            "AppBundle\\Form\\": "src/Form/",
+            "AppBundle\\Form\\Handler\\": "src/Form/Handler/",
+            "AppBundle\\Form\\Handler\\Interfaces\\": "src/Form/Handler/Interfaces/",
+            "AppBundle\\Repository\\": "src/Repository/",
+            "AppBundle\\Repository\\Interfaces\\": "src/Repository/Interfaces/",
+            "AppBundle\\Service\\": "src/Service/",
+            "AppBundle\\Service\\Interfaces\\": "src/Service/Interfaces/"
         },
         "classmap": [
             "app/AppKernel.php",
@@ -29,11 +40,12 @@
         "sensio/framework-extra-bundle": "^5.0.0",
         "symfony/monolog-bundle": "^3.1.0",
         "symfony/swiftmailer-bundle": "^2.6.4",
-        "twig/twig": "^1.0||^2.0"
+        "twig/twig": "^1.0||^2.0",
+        "phpunit/phpunit": "^7.4",
+        "symfony/phpunit-bridge": "*@dev"
     },
     "require-dev": {
-        "sensio/generator-bundle": "^3.0",
-        "symfony/phpunit-bridge": "^3.0"
+        "sensio/generator-bundle": "^3.0"
     },
     "scripts": {
         "symfony-scripts": [

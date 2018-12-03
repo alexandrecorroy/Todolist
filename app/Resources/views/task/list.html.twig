@@ -18,13 +18,14 @@
                         <a href="{{ path('task_edit', {'id' : task.id }) }}">{{ task.title }}</a>
                     </h4>
                     <p>{{ task.content }}</p>
-                    <p class="bottom-align-text">Auteur : <b>
+                    <p class="bottom-align-text">Créé par <b>
                             {% if task.user is not null %}
                                 {{ task.user.username }}
                             {% else %}
                                 Anonyme
                             {% endif %}
-                        </b>
+                        </b>le {{ task.createdAt|date("d/m/Y à H\\hi", "Europe/Paris") }}
+
                     </p>
 
                 </div>
