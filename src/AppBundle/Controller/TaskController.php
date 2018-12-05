@@ -24,7 +24,7 @@ final class TaskController extends Controller
      */
     public function listTaskNotDoneAction(TaskRepositoryInterface $repository): Response
     {
-        return $this->render('task/list.html.twig', ['tasks' => $repository->findAllTaskNotDone($this->getUser())]);
+        return $this->render('task/list.html.twig', ['tasks' => $repository->findAllTaskNotDone()]);
     }
 
     /**
@@ -36,7 +36,7 @@ final class TaskController extends Controller
      */
     public function listTaskDoneAction(TaskRepositoryInterface $repository): Response
     {
-        return $this->render('task/list.html.twig', ['tasks' => $repository->findAllTaskAreDone($this->getUser())]);
+        return $this->render('task/list.html.twig', ['tasks' => $repository->findAllTaskAreDone()]);
     }
 
     /**

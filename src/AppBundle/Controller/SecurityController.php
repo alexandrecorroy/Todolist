@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 final class SecurityController extends Controller
 {
     /**
-     * @Route("/login", name="login")
+     * @Route("/login", name="login", methods={"GET","POST"})
      *
      * @param Request $request
      * @return Response
@@ -34,7 +34,7 @@ final class SecurityController extends Controller
     }
 
     /**
-     * @Route("/forgotPassword", name="forgot_password")
+     * @Route("/forgotPassword", name="forgot_password", methods={"GET","POST"})
      *
      * @param Request $request
      * @param ForgotPasswordTypeHandlerInterface $handler
@@ -55,7 +55,7 @@ final class SecurityController extends Controller
     }
 
     /**
-     * @Route("/resetPassword/{token}", name="reset_password")
+     * @Route("/resetPassword/{token}", name="reset_password", methods={"GET","POST"})
      *
      * @param Request $request
      * @param ResetPasswordTypeHandlerInterface $handler

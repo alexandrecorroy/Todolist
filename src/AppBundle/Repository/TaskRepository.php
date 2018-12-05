@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Interfaces\TaskInterface;
-use AppBundle\Entity\Interfaces\UserInterface;
 use AppBundle\Entity\Task;
 use AppBundle\Repository\Interfaces\TaskRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -65,7 +64,7 @@ final class TaskRepository extends ServiceEntityRepository implements TaskReposi
     /**
      * {@inheritdoc}
      */
-    public function findAllTaskAreDone(UserInterface $user): ?array
+    public function findAllTaskAreDone(): ?array
     {
         $query = $this->createQueryBuilder('t')
             ->where('t.isDone = :isDone')
@@ -81,7 +80,7 @@ final class TaskRepository extends ServiceEntityRepository implements TaskReposi
     /**
      * {@inheritdoc}
      */
-    public function findAllTaskNotDone(UserInterface $user): ?array
+    public function findAllTaskNotDone(): ?array
     {
         $query = $this->createQueryBuilder('t')
             ->where('t.isDone = :isDone')
