@@ -14,18 +14,16 @@ declare(strict_types=1);
 namespace AppBundle\Form\Handler;
 
 use AppBundle\Entity\Interfaces\TaskInterface;
-use AppBundle\Form\Handler\Interfaces\TaskAddTypeHandlerInterface;
 use AppBundle\Form\TaskAddType;
 use AppBundle\Repository\Interfaces\TaskRepositoryInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
- * Class TaskAddTypeTypeHandler.
+ * Class TaskTypeTypeHandler.
  */
-final class TaskAddTypeTypeHandler implements TaskAddTypeHandlerInterface
+final class TaskTypeHandler extends FormTypeHandler
 {
     /**
      * @var TaskRepositoryInterface
@@ -40,7 +38,7 @@ final class TaskAddTypeTypeHandler implements TaskAddTypeHandlerInterface
     /**
      * @var FormFactoryInterface
      */
-    private $form;
+    private $formFactory;
 
     /**
      * {@inheritdoc}
@@ -48,45 +46,30 @@ final class TaskAddTypeTypeHandler implements TaskAddTypeHandlerInterface
     public function __construct(
         TaskRepositoryInterface $repository,
         TokenStorageInterface $tokenStorage,
-        FormFactoryInterface $form
+        FormFactoryInterface $formFactory
     ) {
         $this->repository   = $repository;
         $this->tokenStorage = $tokenStorage;
-        $this->form         = $form;
+        $this->formFactory  = $formFactory;
     }
 
     /**
-     * {@inheritdoc}
+     * @param TaskInterface $task
      */
-    public function handle(
-        FormInterface $form,
-        TaskInterface $task
-    ): bool {
-        if($form->isSubmitted() && $form->isValid())
-        {
-            if(!\is_int($task->getId()))
-            {
-                $task->setUser($this->tokenStorage->getToken()->getUser());
-            }
-
-            $this->repository->save($task);
-
-            return true;
+    public function onSuccess($task): void
+    {
+        if ($this->repository->isNewEntity($task)) {
+            $task->setUser($this->tokenStorage->getToken()->getUser());
         }
 
-        return false;
+        $this->repository->save($task);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function createForm(
-        Request $request,
-        TaskInterface $task
-    ): FormInterface {
-        $form = $this->form->create(TaskAddType::class, $task);
-
-        return $form->handleRequest($request);
+    public function createForm($task): FormInterface
+    {
+        return $this->formFactory->create(TaskAddType::class, $task);
     }
-
 }

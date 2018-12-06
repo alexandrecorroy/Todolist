@@ -15,20 +15,18 @@ namespace AppBundle\Form\Handler;
 
 use AppBundle\Entity\Interfaces\UserInterface;
 use AppBundle\Entity\User;
-use AppBundle\Form\Handler\Interfaces\UserRegistrationTypeHandlerInterface;
 use AppBundle\Form\UserRegistrationType;
 use AppBundle\Repository\Interfaces\UserRepositoryInterface;
 use AppBundle\Service\Interfaces\MailerInterface;
 use AppBundle\Service\Interfaces\PasswordGeneratorInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 /**
  * Class UserRegistrationTypeHandler.
  */
-final class UserRegistrationTypeHandler implements UserRegistrationTypeHandlerInterface
+final class UserRegistrationTypeHandler extends FormTypeHandler
 {
     /**
      * @var EncoderFactoryInterface
@@ -73,41 +71,27 @@ final class UserRegistrationTypeHandler implements UserRegistrationTypeHandlerIn
     }
 
     /**
-     * {@inheritdoc}
+     * @param UserInterface $user
      */
-    public function handle(
-        FormInterface $form,
-        UserInterface $user
-    ): bool {
-        if($form->isSubmitted() && $form->isValid())
-        {
-            $user->setPassword($this->passwordGenerator->generate());
+    public function onSuccess($user): void
+    {
+        $user->setPassword($this->passwordGenerator->generate());
 
-            $this->mailer->sendMail($user, 'Vos identifiants de connexion', 'registration');
+        $this->mailer->sendMail($user, 'Vos identifiants de connexion', 'registration');
 
-            $encoder = $this->encoder->getEncoder(User::class);
+        $encoder = $this->encoder->getEncoder(User::class);
 
-            $password = $encoder->encodePassword($user->getPassword(), null);
+        $password = $encoder->encodePassword($user->getPassword(), null);
 
-            $user->setPassword($password);
+        $user->setPassword($password);
 
-            $this->repository->save($user);
-
-            return true;
-        }
-
-        return false;
+        $this->repository->save($user);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function createForm(
-        Request $request,
-        UserInterface $user
-    ): FormInterface {
-        $form = $this->formFactory->create(UserRegistrationType::class, $user);
-
-        return $form->handleRequest($request);
+    public function createForm($user): FormInterface {
+        return $this->formFactory->create(UserRegistrationType::class, $user);
     }
 }

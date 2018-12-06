@@ -17,6 +17,7 @@ use AppBundle\Entity\Interfaces\UserInterface;
 use AppBundle\Entity\User;
 use AppBundle\Repository\Interfaces\UserRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\UnitOfWork;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -37,7 +38,7 @@ final class UserRepository extends ServiceEntityRepository implements UserReposi
      */
     public function save(UserInterface $user): void
     {
-        if(\is_null($user->getId()))
+        if(UnitOfWork::STATE_NEW === $this->_em->getUnitOfWork()->getEntityState($user))
         {
             $this->_em->persist($user);
         }

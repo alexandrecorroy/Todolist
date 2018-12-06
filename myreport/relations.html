@@ -49,7 +49,7 @@
 <div class="page">
     <div class="content">
         <div class="report-details">
-            Created at 2018-12-03 13:27:57        , with PHPMetrics v2.4.1 (<a href="https://twitter.com/Halleck45">Jean-François Lépine</a>).
+            Created at 2018-12-06 20:00:18        , with PHPMetrics v2.4.1 (<a href="https://twitter.com/Halleck45">Jean-François Lépine</a>).
         </div>
 
 
@@ -92,7 +92,7 @@
                             <path d="M0 0h24v24H0z" fill="none"/>
                             <path d="M20 8h-2.81c-.45-.78-1.07-1.45-1.82-1.96L17 4.41 15.59 3l-2.17 2.17C12.96 5.06 12.49 5 12 5c-.49 0-.96.06-1.41.17L8.41 3 7 4.41l1.62 1.63C7.88 6.55 7.26 7.22 6.81 8H4v2h2.09c-.05.33-.09.66-.09 1v1H4v2h2v1c0 .34.04.67.09 1H4v2h2.81c1.04 1.79 2.97 3 5.19 3s4.15-1.21 5.19-3H20v-2h-2.09c.05-.33.09-.66.09-1v-1h2v-2h-2v-1c0-.34-.04-.67-.09-1H20V8zm-6 8h-4v-2h4v2zm0-4h-4v-2h4v2z"/>
                         </svg>
-                        Violations (1)
+                        Violations (0)
                     </a>
                 </li>
                                 <li>
@@ -282,8 +282,10 @@
             "\\Symfony\\Component\\HttpFoundation\\Response",
             "\\Symfony\\Component\\HttpFoundation\\Request",
             "\\Symfony\\Component\\Routing\\Annotation\\Route",
-            "\\AppBundle\\Form\\Handler\\Interfaces\\ForgotPasswordTypeHandlerInterface",
-            "\\AppBundle\\Form\\Handler\\Interfaces\\ResetPasswordTypeHandlerInterface"
+            "\\AppBundle\\Form\\Handler\\ForgotPasswordTypeHandler",
+            "\\AppBundle\\Repository\\Interfaces\\UserRepositoryInterface",
+            "\\AppBundle\\Entity\\User",
+            "\\AppBundle\\Form\\Handler\\ResetPasswordTypeHandler"
         ]
     },
     {
@@ -292,69 +294,19 @@
         "relations": []
     },
     {
-        "name": "\\AppBundle\\Form\\Handler\\Interfaces\\ForgotPasswordTypeHandlerInterface",
-        "size": 3000,
-        "relations": []
-    },
-    {
-        "name": "\\AppBundle\\Form\\Handler\\Interfaces\\ResetPasswordTypeHandlerInterface",
-        "size": 3000,
-        "relations": []
-    },
-    {
-        "name": "\\AppBundle\\Controller\\TaskController",
+        "name": "\\AppBundle\\Form\\Handler\\ForgotPasswordTypeHandler",
         "size": 3000,
         "relations": [
-            "\\Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller",
-            "\\Symfony\\Component\\HttpFoundation\\Response",
-            "\\AppBundle\\Repository\\Interfaces\\TaskRepositoryInterface",
-            "\\Symfony\\Component\\Routing\\Annotation\\Route",
-            "\\Symfony\\Component\\HttpFoundation\\Request",
-            "\\AppBundle\\Form\\Handler\\Interfaces\\TaskAddTypeHandlerInterface",
-            "\\AppBundle\\Entity\\Task"
-        ]
-    },
-    {
-        "name": "\\AppBundle\\Repository\\Interfaces\\TaskRepositoryInterface",
-        "size": 3000,
-        "relations": []
-    },
-    {
-        "name": "\\AppBundle\\Form\\Handler\\Interfaces\\TaskAddTypeHandlerInterface",
-        "size": 3000,
-        "relations": []
-    },
-    {
-        "name": "\\AppBundle\\Entity\\Task",
-        "size": 3000,
-        "relations": [
-            "\\AppBundle\\Entity\\Interfaces\\TaskInterface",
-            "\\Datetime",
-            "\\AppBundle\\Entity\\Interfaces\\UserInterface",
-            "\\DateTime"
-        ]
-    },
-    {
-        "name": "\\AppBundle\\Controller\\UserController",
-        "size": 3000,
-        "relations": [
-            "\\Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller",
-            "\\Symfony\\Component\\HttpFoundation\\Response",
+            "\\AppBundle\\Form\\Handler\\FormTypeHandler",
             "\\AppBundle\\Repository\\Interfaces\\UserRepositoryInterface",
-            "\\Symfony\\Component\\Routing\\Annotation\\Route",
-            "\\Symfony\\Component\\HttpFoundation\\Request",
-            "\\AppBundle\\Form\\Handler\\Interfaces\\UserRegistrationTypeHandlerInterface",
-            "\\AppBundle\\Entity\\User",
-            "\\AppBundle\\Form\\Handler\\Interfaces\\UserUpdateTypeHandlerInterface"
+            "\\Symfony\\Component\\Form\\FormFactoryInterface",
+            "\\AppBundle\\Service\\Interfaces\\MailerInterface",
+            "\\AppBundle\\Service\\Interfaces\\TokenGeneratorInterface",
+            "\\Symfony\\Component\\Form\\FormInterface"
         ]
     },
     {
         "name": "\\AppBundle\\Repository\\Interfaces\\UserRepositoryInterface",
-        "size": 3000,
-        "relations": []
-    },
-    {
-        "name": "\\AppBundle\\Form\\Handler\\Interfaces\\UserRegistrationTypeHandlerInterface",
         "size": 3000,
         "relations": []
     },
@@ -367,33 +319,134 @@
         ]
     },
     {
-        "name": "\\AppBundle\\Form\\Handler\\Interfaces\\UserUpdateTypeHandlerInterface",
-        "size": 3000,
-        "relations": []
-    },
-    {
-        "name": "\\AppBundle\\DoctrineListener\\CanRemoveTaskDoctrineListener",
+        "name": "\\AppBundle\\Form\\Handler\\ResetPasswordTypeHandler",
         "size": 3000,
         "relations": [
-            "\\Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorageInterface",
-            "\\Doctrine\\ORM\\Event\\LifecycleEventArgs",
-            "\\Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException"
+            "\\AppBundle\\Form\\Handler\\FormTypeHandler",
+            "\\AppBundle\\Repository\\Interfaces\\UserRepositoryInterface",
+            "\\Symfony\\Component\\Form\\FormFactoryInterface",
+            "\\AppBundle\\Service\\Interfaces\\MailerInterface",
+            "\\AppBundle\\Service\\Interfaces\\TokenGeneratorInterface",
+            "\\Symfony\\Component\\Security\\Core\\Encoder\\EncoderFactoryInterface",
+            "\\Symfony\\Component\\Form\\FormInterface"
         ]
     },
     {
-        "name": "\\Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorageInterface",
+        "name": "\\AppBundle\\Controller\\TaskController",
+        "size": 3000,
+        "relations": [
+            "\\Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller",
+            "\\Symfony\\Component\\HttpFoundation\\Response",
+            "\\AppBundle\\Repository\\Interfaces\\TaskRepositoryInterface",
+            "\\Symfony\\Component\\Routing\\Annotation\\Route",
+            "\\Symfony\\Component\\HttpFoundation\\Request",
+            "\\AppBundle\\Form\\Handler\\TaskTypeHandler",
+            "\\AppBundle\\Entity\\Task",
+            "\\Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\IsGranted"
+        ]
+    },
+    {
+        "name": "\\AppBundle\\Repository\\Interfaces\\TaskRepositoryInterface",
         "size": 3000,
         "relations": []
     },
     {
-        "name": "\\Doctrine\\ORM\\Event\\LifecycleEventArgs",
+        "name": "\\AppBundle\\Form\\Handler\\TaskTypeHandler",
+        "size": 3000,
+        "relations": [
+            "\\AppBundle\\Form\\Handler\\FormTypeHandler",
+            "\\AppBundle\\Repository\\Interfaces\\TaskRepositoryInterface",
+            "\\Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorageInterface",
+            "\\Symfony\\Component\\Form\\FormFactoryInterface",
+            "\\Symfony\\Component\\Form\\FormInterface"
+        ]
+    },
+    {
+        "name": "\\AppBundle\\Entity\\Task",
+        "size": 3000,
+        "relations": [
+            "\\AppBundle\\Entity\\Interfaces\\TaskInterface",
+            "\\Datetime",
+            "\\AppBundle\\Entity\\Interfaces\\UserInterface",
+            "\\DateTime"
+        ]
+    },
+    {
+        "name": "\\Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\IsGranted",
         "size": 3000,
         "relations": []
     },
     {
-        "name": "\\Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException",
+        "name": "\\AppBundle\\Controller\\UserController",
+        "size": 3000,
+        "relations": [
+            "\\Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller",
+            "\\Symfony\\Component\\HttpFoundation\\Response",
+            "\\AppBundle\\Repository\\Interfaces\\UserRepositoryInterface",
+            "\\Symfony\\Component\\Routing\\Annotation\\Route",
+            "\\Symfony\\Component\\HttpFoundation\\Request",
+            "\\AppBundle\\Form\\Handler\\UserRegistrationTypeHandler",
+            "\\AppBundle\\Entity\\User",
+            "\\AppBundle\\Form\\Handler\\UserUpdateTypeHandler"
+        ]
+    },
+    {
+        "name": "\\AppBundle\\Form\\Handler\\UserRegistrationTypeHandler",
+        "size": 3000,
+        "relations": [
+            "\\AppBundle\\Form\\Handler\\FormTypeHandler",
+            "\\Symfony\\Component\\Security\\Core\\Encoder\\EncoderFactoryInterface",
+            "\\AppBundle\\Repository\\Interfaces\\UserRepositoryInterface",
+            "\\AppBundle\\Service\\Interfaces\\PasswordGeneratorInterface",
+            "\\AppBundle\\Service\\Interfaces\\MailerInterface",
+            "\\Symfony\\Component\\Form\\FormFactoryInterface",
+            "\\Symfony\\Component\\Form\\FormInterface"
+        ]
+    },
+    {
+        "name": "\\AppBundle\\Form\\Handler\\UserUpdateTypeHandler",
+        "size": 3000,
+        "relations": [
+            "\\AppBundle\\Form\\Handler\\FormTypeHandler",
+            "\\AppBundle\\Repository\\Interfaces\\UserRepositoryInterface",
+            "\\AppBundle\\Service\\Interfaces\\MailerInterface",
+            "\\Symfony\\Component\\Form\\FormFactoryInterface",
+            "\\Symfony\\Component\\Form\\FormInterface"
+        ]
+    },
+    {
+        "name": "\\AppBundle\\DataFixtures\\LoadUserData",
+        "size": 3000,
+        "relations": [
+            "\\Doctrine\\Bundle\\FixturesBundle\\Fixture",
+            "\\Symfony\\Component\\Security\\Core\\Encoder\\UserPasswordEncoderInterface",
+            "\\Doctrine\\Common\\Persistence\\ObjectManager",
+            "\\AppBundle\\Entity\\User"
+        ]
+    },
+    {
+        "name": "\\Doctrine\\Bundle\\FixturesBundle\\Fixture",
         "size": 3000,
         "relations": []
+    },
+    {
+        "name": "\\Symfony\\Component\\Security\\Core\\Encoder\\UserPasswordEncoderInterface",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\Doctrine\\Common\\Persistence\\ObjectManager",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\AppBundle\\DataFixtures\\LoadUserTaskData",
+        "size": 3000,
+        "relations": [
+            "\\Doctrine\\Bundle\\FixturesBundle\\Fixture",
+            "\\Doctrine\\Common\\Persistence\\ObjectManager",
+            "\\AppBundle\\Entity\\Task"
+        ]
     },
     {
         "name": "\\AppBundle\\Entity\\Interfaces\\TaskInterface",
@@ -439,17 +492,9 @@
         "relations": []
     },
     {
-        "name": "\\AppBundle\\Form\\Handler\\ForgotPasswordTypeHandler",
+        "name": "\\AppBundle\\Form\\Handler\\FormTypeHandler",
         "size": 3000,
-        "relations": [
-            "\\AppBundle\\Form\\Handler\\Interfaces\\ForgotPasswordTypeHandlerInterface",
-            "\\AppBundle\\Repository\\Interfaces\\UserRepositoryInterface",
-            "\\Symfony\\Component\\Form\\FormFactoryInterface",
-            "\\AppBundle\\Service\\Interfaces\\MailerInterface",
-            "\\AppBundle\\Service\\Interfaces\\TokenGeneratorInterface",
-            "\\Symfony\\Component\\Form\\FormInterface",
-            "\\Symfony\\Component\\HttpFoundation\\Request"
-        ]
+        "relations": []
     },
     {
         "name": "\\Symfony\\Component\\Form\\FormFactoryInterface",
@@ -472,18 +517,14 @@
         "relations": []
     },
     {
-        "name": "\\AppBundle\\Form\\Handler\\ResetPasswordTypeHandler",
+        "name": "\\this",
         "size": 3000,
-        "relations": [
-            "\\AppBundle\\Form\\Handler\\Interfaces\\ResetPasswordTypeHandlerInterface",
-            "\\AppBundle\\Repository\\Interfaces\\UserRepositoryInterface",
-            "\\Symfony\\Component\\Form\\FormFactoryInterface",
-            "\\AppBundle\\Service\\Interfaces\\MailerInterface",
-            "\\AppBundle\\Service\\Interfaces\\TokenGeneratorInterface",
-            "\\Symfony\\Component\\Security\\Core\\Encoder\\EncoderFactoryInterface",
-            "\\Symfony\\Component\\Form\\FormInterface",
-            "\\Symfony\\Component\\HttpFoundation\\Request"
-        ]
+        "relations": []
+    },
+    {
+        "name": "\\Symfony\\Component\\Form\\FormView",
+        "size": 3000,
+        "relations": []
     },
     {
         "name": "\\Symfony\\Component\\Security\\Core\\Encoder\\EncoderFactoryInterface",
@@ -491,50 +532,14 @@
         "relations": []
     },
     {
-        "name": "\\AppBundle\\Form\\Handler\\TaskAddTypeTypeHandler",
+        "name": "\\Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorageInterface",
         "size": 3000,
-        "relations": [
-            "\\AppBundle\\Form\\Handler\\Interfaces\\TaskAddTypeHandlerInterface",
-            "\\AppBundle\\Repository\\Interfaces\\TaskRepositoryInterface",
-            "\\Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorageInterface",
-            "\\Symfony\\Component\\Form\\FormFactoryInterface",
-            "\\Symfony\\Component\\Form\\FormInterface",
-            "\\AppBundle\\Entity\\Interfaces\\TaskInterface",
-            "\\Symfony\\Component\\HttpFoundation\\Request"
-        ]
-    },
-    {
-        "name": "\\AppBundle\\Form\\Handler\\UserRegistrationTypeHandler",
-        "size": 3000,
-        "relations": [
-            "\\AppBundle\\Form\\Handler\\Interfaces\\UserRegistrationTypeHandlerInterface",
-            "\\Symfony\\Component\\Security\\Core\\Encoder\\EncoderFactoryInterface",
-            "\\AppBundle\\Repository\\Interfaces\\UserRepositoryInterface",
-            "\\AppBundle\\Service\\Interfaces\\PasswordGeneratorInterface",
-            "\\AppBundle\\Service\\Interfaces\\MailerInterface",
-            "\\Symfony\\Component\\Form\\FormFactoryInterface",
-            "\\Symfony\\Component\\Form\\FormInterface",
-            "\\AppBundle\\Entity\\Interfaces\\UserInterface",
-            "\\Symfony\\Component\\HttpFoundation\\Request"
-        ]
+        "relations": []
     },
     {
         "name": "\\AppBundle\\Service\\Interfaces\\PasswordGeneratorInterface",
         "size": 3000,
         "relations": []
-    },
-    {
-        "name": "\\AppBundle\\Form\\Handler\\UserUpdateTypeHandler",
-        "size": 3000,
-        "relations": [
-            "\\AppBundle\\Form\\Handler\\Interfaces\\UserUpdateTypeHandlerInterface",
-            "\\AppBundle\\Repository\\Interfaces\\UserRepositoryInterface",
-            "\\AppBundle\\Service\\Interfaces\\MailerInterface",
-            "\\Symfony\\Component\\Form\\FormFactoryInterface",
-            "\\Symfony\\Component\\Form\\FormInterface",
-            "\\AppBundle\\Entity\\Interfaces\\UserInterface",
-            "\\Symfony\\Component\\HttpFoundation\\Request"
-        ]
     },
     {
         "name": "\\AppBundle\\Form\\ResetPasswordType",
@@ -569,8 +574,7 @@
             "\\Symfony\\Bridge\\Doctrine\\RegistryInterface",
             "\\parent",
             "\\AppBundle\\Entity\\Interfaces\\TaskInterface",
-            "\\this",
-            "\\AppBundle\\Entity\\Interfaces\\UserInterface"
+            "\\this"
         ]
     },
     {
@@ -589,11 +593,6 @@
         "relations": []
     },
     {
-        "name": "\\this",
-        "size": 3000,
-        "relations": []
-    },
-    {
         "name": "\\AppBundle\\Repository\\UserRepository",
         "size": 3000,
         "relations": [
@@ -603,6 +602,32 @@
             "\\parent",
             "\\AppBundle\\Entity\\Interfaces\\UserInterface"
         ]
+    },
+    {
+        "name": "\\AppBundle\\Security\\TaskVoter",
+        "size": 3000,
+        "relations": [
+            "\\Symfony\\Component\\Security\\Core\\Authorization\\Voter\\Voter",
+            "\\Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface",
+            "\\LogicException",
+            "\\AppBundle\\Entity\\Interfaces\\TaskInterface",
+            "\\AppBundle\\Entity\\Interfaces\\UserInterface"
+        ]
+    },
+    {
+        "name": "\\Symfony\\Component\\Security\\Core\\Authorization\\Voter\\Voter",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\LogicException",
+        "size": 3000,
+        "relations": []
     },
     {
         "name": "\\AppBundle\\Service\\Mailer",

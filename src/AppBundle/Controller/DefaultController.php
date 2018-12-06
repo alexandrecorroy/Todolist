@@ -12,7 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 final class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="homepage", methods={"GET"})
+     * @Route(path="/", name="homepage", methods={"GET"})
+     *
+     * @return Response
      */
     public function indexAction(): Response
     {

@@ -13,19 +13,18 @@ declare(strict_types=1);
 
 namespace AppBundle\Form\Handler;
 
+use AppBundle\Entity\Interfaces\UserInterface;
 use AppBundle\Form\ForgotPasswordType;
-use AppBundle\Form\Handler\Interfaces\ForgotPasswordTypeHandlerInterface;
 use AppBundle\Repository\Interfaces\UserRepositoryInterface;
 use AppBundle\Service\Interfaces\MailerInterface;
 use AppBundle\Service\Interfaces\TokenGeneratorInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class ForgotPasswordTypeHandler.
  */
-final class ForgotPasswordTypeHandler implements ForgotPasswordTypeHandlerInterface
+final class ForgotPasswordTypeHandler extends FormTypeHandler
 {
     /**
      * @var UserRepositoryInterface
@@ -35,7 +34,7 @@ final class ForgotPasswordTypeHandler implements ForgotPasswordTypeHandlerInterf
     /**
      * @var FormFactoryInterface
      */
-    private $form;
+    private $formFactory;
 
     /**
      * @var MailerInterface
@@ -52,50 +51,36 @@ final class ForgotPasswordTypeHandler implements ForgotPasswordTypeHandlerInterf
      */
     public function __construct(
         UserRepositoryInterface $repository,
-        FormFactoryInterface $form,
+        FormFactoryInterface $formFactory,
         MailerInterface $mailer,
         TokenGeneratorInterface $token
     ) {
         $this->repository   = $repository;
-        $this->form         = $form;
+        $this->formFactory  = $formFactory;
         $this->mailer       = $mailer;
         $this->token        = $token;
     }
 
     /**
-     * {@inheritdoc}
+     * @param UserInterface $user
      */
-    public function handle(
-        FormInterface $form
-    ): bool {
-        if($form->isSubmitted() && $form->isValid())
+    public function onSuccess($user): void
+    {
+        if(!\is_null($user))
         {
-            $user = $this->repository->getUserByEmail($form->getData()['email']);
+            $user->setToken($this->token->generateToken($user));
 
-            if(!\is_null($user))
-            {
-                $user->setToken($this->token->generateToken($user));
+            $this->repository->save($user);
 
-                $this->repository->save($user);
-
-                $this->mailer->sendMail($user, 'Mot de passe oublié', 'forgot_password');
-            }
-
-            return true;
+            $this->mailer->sendMail($user, 'Mot de passe oublié', 'forgot_password');
         }
-
-        return false;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function createForm(
-        Request $request
-    ): FormInterface {
-
-        $form = $this->form->create(ForgotPasswordType::class);
-
-        return $form->handleRequest($request);
+    public function createForm($user): FormInterface
+    {
+        return $this->formFactory->create(ForgotPasswordType::class, $user);
     }
 }

@@ -44,12 +44,16 @@ interface TaskRepositoryInterface
     public function flush(): void;
 
     /**
+     * @param int $isDone
+     *
      * @return array|null
      */
-    public function findAllTaskAreDone(): ?array;
+    public function findAllTask(int $isDone): ?array;
 
     /**
-     * @return array|null
+     * @param TaskInterface $task
+     *
+     * @return bool
      */
-    public function findAllTaskNotDone(): ?array;
+    public function isNewEntity(TaskInterface $task): bool;
 }

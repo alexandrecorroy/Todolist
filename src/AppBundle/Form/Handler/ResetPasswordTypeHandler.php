@@ -13,20 +13,19 @@ declare(strict_types=1);
 
 namespace AppBundle\Form\Handler;
 
-use AppBundle\Form\Handler\Interfaces\ResetPasswordTypeHandlerInterface;
+use AppBundle\Entity\Interfaces\UserInterface;
 use AppBundle\Form\ResetPasswordType;
 use AppBundle\Repository\Interfaces\UserRepositoryInterface;
 use AppBundle\Service\Interfaces\MailerInterface;
 use AppBundle\Service\Interfaces\TokenGeneratorInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 /**
  * Class ResetPasswordTypeHandler.
  */
-final class ResetPasswordTypeHandler implements ResetPasswordTypeHandlerInterface
+final class ResetPasswordTypeHandler extends FormTypeHandler
 {
     /**
      * @var UserRepositoryInterface
@@ -36,7 +35,7 @@ final class ResetPasswordTypeHandler implements ResetPasswordTypeHandlerInterfac
     /**
      * @var FormFactoryInterface
      */
-    private $form;
+    private $formFactory;
 
     /**
      * @var MailerInterface
@@ -58,56 +57,42 @@ final class ResetPasswordTypeHandler implements ResetPasswordTypeHandlerInterfac
      */
     public function __construct(
         UserRepositoryInterface $repository,
-        FormFactoryInterface $form,
+        FormFactoryInterface $formFactory,
         MailerInterface $mailer,
         TokenGeneratorInterface $token,
         EncoderFactoryInterface $encoder
     ) {
         $this->repository   = $repository;
-        $this->form         = $form;
+        $this->formFactory  = $formFactory;
         $this->mailer       = $mailer;
         $this->token        = $token;
         $this->encoder      = $encoder;
     }
 
     /**
-     * {@inheritdoc}
+     * @param UserInterface $user
      */
-    public function handle(
-        FormInterface $form
-    ): bool {
-        if($form->isSubmitted() && $form->isValid())
+    public function onSuccess($user): void
+    {
+        if(!\is_null($user))
         {
-            $user = $this->repository->getUserByToken($form->getData()['token']);
+            $passwordEncoder = $this->encoder->getEncoder($user);
 
-            if(!\is_null($user))
-            {
-                $passwordEncoder = $this->encoder->getEncoder($user);
+            $user->setPassword($passwordEncoder->encodePassword($user->getPassword(), null));
 
-                $user->setPassword($passwordEncoder->encodePassword($form->getData()['password'], null));
+            $user->setToken($this->token->generateToken($user));
 
-                $user->setToken($this->token->generateToken($user));
+            $this->repository->save($user);
 
-                $this->repository->save($user);
-
-                $this->mailer->sendMail($user, 'Votre nouveau mot de passe', 'reset_password');
-            }
-
-            return true;
+            $this->mailer->sendMail($user, 'Votre nouveau mot de passe', 'reset_password');
         }
-
-        return false;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function createForm(
-        Request $request
-    ): FormInterface {
-
-        $form = $this->form->create(ResetPasswordType::class);
-
-        return $form->handleRequest($request);
+    public function createForm($user): FormInterface
+    {
+        return $this->formFactory->create(ResetPasswordType::class, $user);
     }
 }

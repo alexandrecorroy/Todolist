@@ -17,6 +17,7 @@ use AppBundle\Entity\Interfaces\TaskInterface;
 use AppBundle\Entity\Task;
 use AppBundle\Repository\Interfaces\TaskRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\UnitOfWork;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -35,9 +36,17 @@ final class TaskRepository extends ServiceEntityRepository implements TaskReposi
     /**
      * {@inheritdoc}
      */
+    public function isNewEntity(TaskInterface $task): bool
+    {
+        return UnitOfWork::STATE_NEW === $this->_em->getUnitOfWork()->getEntityState($task);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function save(TaskInterface $task): void
     {
-        if(\is_null($task->getId()))
+        if($this::isNewEntity($task))
         {
             $this->_em->persist($task);
         }
@@ -62,30 +71,16 @@ final class TaskRepository extends ServiceEntityRepository implements TaskReposi
     }
 
     /**
-     * {@inheritdoc}
+     * @param int $isDone
+     *
+     * @return array|null
      */
-    public function findAllTaskAreDone(): ?array
+    public function findAllTask($isDone): ?array
     {
         $query = $this->createQueryBuilder('t')
             ->where('t.isDone = :isDone')
             ->setParameters([
-                'isDone' => Task::IS_DONE
-            ])
-            ->getQuery()
-            ->getResult();
-
-        return $query;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function findAllTaskNotDone(): ?array
-    {
-        $query = $this->createQueryBuilder('t')
-            ->where('t.isDone = :isDone')
-            ->setParameters([
-                'isDone' => Task::IS_NOT_DONE
+                'isDone' => $isDone
             ])
             ->getQuery()
             ->getResult();

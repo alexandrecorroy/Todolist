@@ -2,8 +2,10 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Form\Handler\Interfaces\ForgotPasswordTypeHandlerInterface;
-use AppBundle\Form\Handler\Interfaces\ResetPasswordTypeHandlerInterface;
+use AppBundle\Entity\User;
+use AppBundle\Form\Handler\ForgotPasswordTypeHandler;
+use AppBundle\Form\Handler\ResetPasswordTypeHandler;
+use AppBundle\Repository\Interfaces\UserRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 final class SecurityController extends Controller
 {
     /**
-     * @Route("/login", name="login", methods={"GET","POST"})
+     * @Route(path="/login", name="login", methods={"GET","POST"})
      *
      * @param Request $request
      * @return Response
@@ -34,44 +36,46 @@ final class SecurityController extends Controller
     }
 
     /**
-     * @Route("/forgotPassword", name="forgot_password", methods={"GET","POST"})
+     * @Route(path="/forgotPassword", name="forgot_password", methods={"GET","POST"})
      *
      * @param Request $request
-     * @param ForgotPasswordTypeHandlerInterface $handler
+     * @param ForgotPasswordTypeHandler $handler
+     * @param UserRepositoryInterface $repository
+     *
      * @return Response
      */
-    public function forgotPasswordAction(Request $request, ForgotPasswordTypeHandlerInterface $handler): Response
+    public function forgotPasswordAction(Request $request, ForgotPasswordTypeHandler $handler, UserRepositoryInterface $repository): Response
     {
-        $form = $handler->createForm($request);
+        $user = $repository->getUserByEmail($request->request->get('forgot_password')['email']);
 
-        if($handler->handle($form))
+        if($handler->handle($request, $user))
         {
             $this->addFlash('success', 'Un email a été envoyé pour renouveler votre mot de passe.');
 
             return $this->redirectToRoute('homepage');
         }
 
-        return $this->render('security/forgot_password.html.twig', ['form' => $form->createView()]);
+        return $this->render('security/forgot_password.html.twig', ['form' => $handler->createView()]);
     }
 
     /**
-     * @Route("/resetPassword/{token}", name="reset_password", methods={"GET","POST"})
+     * @Route(path="/resetPassword/{token}", name="reset_password", methods={"GET","POST"})
      *
+     * @param User $user
      * @param Request $request
-     * @param ResetPasswordTypeHandlerInterface $handler
+     * @param ResetPasswordTypeHandler $handler
+     *
      * @return Response
      */
-    public function resetPasswordAction(Request $request, ResetPasswordTypeHandlerInterface $handler): Response
+    public function resetPasswordAction(User $user, Request $request, ResetPasswordTypeHandler $handler): Response
     {
-        $form = $handler->createForm($request);
-
-        if($handler->handle($form))
+        if($handler->handle($request, $user))
         {
             $this->addFlash('success', 'Mot de passe mis à jour.');
 
             return $this->redirectToRoute('homepage');
         }
 
-        return $this->render('security/reset_password.html.twig', ['form' => $form->createView()]);
+        return $this->render('security/reset_password.html.twig', ['form' => $handler->createView()]);
     }
 }

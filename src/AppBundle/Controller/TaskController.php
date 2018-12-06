@@ -3,8 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Task;
-use AppBundle\Form\Handler\Interfaces\TaskAddTypeHandlerInterface;
+use AppBundle\Form\Handler\TaskTypeHandler;
 use AppBundle\Repository\Interfaces\TaskRepositoryInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 final class TaskController extends Controller
 {
     /**
-     * @Route("/tasks/pending", name="task_list_not_done", methods={"GET"})
+     * @Route(path="/tasks/pending", name="task_list_not_done", methods={"GET"})
      *
      * @param TaskRepositoryInterface $repository
      *
@@ -24,11 +25,11 @@ final class TaskController extends Controller
      */
     public function listTaskNotDoneAction(TaskRepositoryInterface $repository): Response
     {
-        return $this->render('task/list.html.twig', ['tasks' => $repository->findAllTaskNotDone()]);
+        return $this->render('task/list.html.twig', ['tasks' => $repository->findAllTask(0)]);
     }
 
     /**
-     * @Route("/tasks/done", name="task_list_done", methods={"GET"})
+     * @Route(path="/tasks/done", name="task_list_done", methods={"GET"})
      *
      * @param TaskRepositoryInterface $repository
      *
@@ -36,46 +37,42 @@ final class TaskController extends Controller
      */
     public function listTaskDoneAction(TaskRepositoryInterface $repository): Response
     {
-        return $this->render('task/list.html.twig', ['tasks' => $repository->findAllTaskAreDone()]);
+        return $this->render('task/list.html.twig', ['tasks' => $repository->findAllTask(1)]);
     }
 
     /**
-     * @Route("/tasks/create", name="task_create", methods={"GET","POST"})
+     * @Route(path="/tasks/create", name="task_create", methods={"GET","POST"})
      *
      * @param Request $request
-     * @param TaskAddTypeHandlerInterface $handler
+     * @param TaskTypeHandler $handler
      *
      * @return Response
      */
-    public function createAction(Request $request, TaskAddTypeHandlerInterface $handler): Response
+    public function createAction(Request $request, TaskTypeHandler $handler): Response
     {
         $task = new Task();
 
-        $form = $handler->createForm($request, $task);
-
-        if ($handler->handle($form, $task)) {
+        if ($handler->handle($request, $task)) {
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
 
             return $this->redirectToRoute('task_list_not_done');
         }
 
-        return $this->render('task/create.html.twig', ['form' => $form->createView()]);
+        return $this->render('task/create.html.twig', ['form' => $handler->createView()]);
     }
 
     /**
-     * @Route("/tasks/{id}/edit", name="task_edit", methods={"GET","POST"})
+     * @Route(path="/tasks/{id}/edit", name="task_edit", methods={"GET","POST"})
      *
      * @param Task $task
      * @param Request $request
-     * @param TaskAddTypeHandlerInterface $handler
+     * @param TaskTypeHandler $handler
      *
      * @return Response
      */
-    public function editAction(Task $task, Request $request, TaskAddTypeHandlerInterface $handler): Response
+    public function editAction(Task $task, Request $request, TaskTypeHandler $handler): Response
     {
-        $form = $handler->createForm($request, $task);
-
-        if ($handler->handle($form, $task)) {
+        if ($handler->handle($request, $task)) {
 
             $this->addFlash('success', 'La tâche a bien été modifiée.');
 
@@ -83,13 +80,13 @@ final class TaskController extends Controller
         }
 
         return $this->render('task/edit.html.twig', [
-            'form' => $form->createView(),
+            'form' => $handler->createView(),
             'task' => $task,
         ]);
     }
 
     /**
-     * @Route("/tasks/{id}/toggle", name="task_toggle", methods={"GET"})
+     * @Route(path="/tasks/{id}/toggle", name="task_toggle", methods={"GET"})
      *
      * @param Task $task
      * @param TaskRepositoryInterface $repository
@@ -108,7 +105,8 @@ final class TaskController extends Controller
     }
 
     /**
-     * @Route("/tasks/{id}/delete", name="task_delete", methods={"GET"})
+     * @Route(path="/tasks/{id}/delete", name="task_delete", methods={"GET"})
+     * @IsGranted("delete", subject="task")
      *
      * @param Task $task
      * @param TaskRepositoryInterface $repository

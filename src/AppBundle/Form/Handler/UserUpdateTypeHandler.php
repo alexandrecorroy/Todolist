@@ -14,18 +14,16 @@ declare(strict_types=1);
 namespace AppBundle\Form\Handler;
 
 use AppBundle\Entity\Interfaces\UserInterface;
-use AppBundle\Form\Handler\Interfaces\UserUpdateTypeHandlerInterface;
 use AppBundle\Form\UserRegistrationType;
 use AppBundle\Repository\Interfaces\UserRepositoryInterface;
 use AppBundle\Service\Interfaces\MailerInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class UserUpdateTypeHandler.
  */
-final class UserUpdateTypeHandler implements UserUpdateTypeHandlerInterface
+final class UserUpdateTypeHandler extends FormTypeHandler
 {
     /**
      * @var UserRepositoryInterface
@@ -46,9 +44,9 @@ final class UserUpdateTypeHandler implements UserUpdateTypeHandlerInterface
      * {@inheritdoc}
      */
     public function __construct(
-    UserRepositoryInterface $repository,
-    MailerInterface $mailer,
-    FormFactoryInterface $formFactory
+        UserRepositoryInterface $repository,
+        MailerInterface $mailer,
+        FormFactoryInterface $formFactory
     ) {
         $this->repository  = $repository;
         $this->mailer      = $mailer;
@@ -56,32 +54,19 @@ final class UserUpdateTypeHandler implements UserUpdateTypeHandlerInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param UserInterface $user
      */
-    public function handle(
-    FormInterface $form,
-    UserInterface $user
-    ): bool {
-        if($form->isSubmitted() && $form->isValid())
-        {
-            $this->repository->save($user);
+    public function onSuccess($user): void
+    {
+        $this->repository->save($user);
 
-            $this->mailer->sendMail($user, 'Mise à jour de vos identifiants', 'update_user');
-
-            return true;
-        }
-        return false;
+        $this->mailer->sendMail($user, 'Mise à jour de vos identifiants', 'update_user');
     }
 
     /**
      * {@inheritdoc}
      */
-    public function createForm(
-        Request $request,
-        UserInterface $user
-    ): FormInterface {
-        $form = $this->formFactory->create(UserRegistrationType::class, $user);
-
-        return $form->handleRequest($request);
+    public function createForm($user): FormInterface {
+        return $this->formFactory->create(UserRegistrationType::class, $user);
     }
 }

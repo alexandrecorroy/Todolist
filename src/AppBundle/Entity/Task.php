@@ -16,16 +16,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Task implements TaskInterface
 {
     /**
-     * const when task is done
-     */
-    const IS_DONE = 1;
-
-    /**
-     * const when task is not done
-     */
-    const IS_NOT_DONE = 0;
-
-    /**
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")

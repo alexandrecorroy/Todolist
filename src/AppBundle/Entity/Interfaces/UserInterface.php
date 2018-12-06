@@ -68,7 +68,13 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
      */
     public function setIsAdmin(bool $isAdmin): void;
 
+    /**
+     * @param string $token
+     */
     public function setToken(string $token): void;
 
+    /**
+     * @return string
+     */
     public function getToken(): string;
 }

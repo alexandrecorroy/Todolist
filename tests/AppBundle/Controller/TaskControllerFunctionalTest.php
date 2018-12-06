@@ -55,8 +55,8 @@ final class TaskControllerFunctionalTest extends DataFixturesTestCase
     {
         $this::createAuthenticatedRoleUser();
 
-        $tasks = $this->entityManager->getRepository(Task::class)->findAllTaskNotDone();
-        $tasksDone = $this->entityManager->getRepository(Task::class)->findAllTaskAreDone();
+        $tasks = $this->entityManager->getRepository(Task::class)->findAllTask(0);
+        $tasksDone = $this->entityManager->getRepository(Task::class)->findAllTask(1);
 
         foreach ($tasks as $task)
         {
@@ -72,7 +72,7 @@ final class TaskControllerFunctionalTest extends DataFixturesTestCase
 
         $countAllTaskDone = count($tasks)+count($tasksDone);
 
-        $tasks = $this->entityManager->getRepository(Task::class)->findAllTaskAreDone();
+        $tasks = $this->entityManager->getRepository(Task::class)->findAllTask(1);
 
         static::assertEquals($countAllTaskDone, count($tasks));
     }
@@ -84,7 +84,7 @@ final class TaskControllerFunctionalTest extends DataFixturesTestCase
     {
         $this::createAuthenticatedRoleAdmin();
 
-        $tasks = $this->entityManager->getRepository(Task::class)->findAllTaskNotDone();
+        $tasks = $this->entityManager->getRepository(Task::class)->findAllTask(0);
 
         foreach ($tasks as $task)
         {
@@ -96,7 +96,7 @@ final class TaskControllerFunctionalTest extends DataFixturesTestCase
             static::assertTrue($this->client->getResponse()->headers->contains('content-type', 'text/html; charset=UTF-8'));
         }
 
-        $tasks = $this->entityManager->getRepository(Task::class)->findAllTaskNotDone();
+        $tasks = $this->entityManager->getRepository(Task::class)->findAllTask(0);
 
         static::assertEquals(0, count($tasks));
     }
@@ -108,7 +108,7 @@ final class TaskControllerFunctionalTest extends DataFixturesTestCase
     {
         $this::createAuthenticatedRoleUser();
 
-        $tasks = $this->entityManager->getRepository(Task::class)->findAllTaskNotDone();
+        $tasks = $this->entityManager->getRepository(Task::class)->findAllTask(0);
 
         $countTaskStart = count($tasks);
 
@@ -120,7 +120,7 @@ final class TaskControllerFunctionalTest extends DataFixturesTestCase
             static::assertTrue($this->client->getResponse()->headers->contains('content-type', 'text/html; charset=UTF-8'));
         }
 
-        $tasksEnd = $this->entityManager->getRepository(Task::class)->findAllTaskNotDone();
+        $tasksEnd = $this->entityManager->getRepository(Task::class)->findAllTask(0);
 
         static::assertEquals($countTaskStart, count($tasksEnd));
     }
@@ -132,7 +132,7 @@ final class TaskControllerFunctionalTest extends DataFixturesTestCase
     {
         $this::createAuthenticatedRoleUser();
 
-        $countTasksBeforeAdd = count($this->entityManager->getRepository(Task::class)->findAllTaskNotDone());
+        $countTasksBeforeAdd = count($this->entityManager->getRepository(Task::class)->findAllTask(0));
 
         $crawler = $this->client->request('GET', '/tasks/create');
 
@@ -150,7 +150,7 @@ final class TaskControllerFunctionalTest extends DataFixturesTestCase
         $this->client->followRedirect();
 
         static::assertEquals(Response::HTTP_OK, $this->client->getResponse()->getStatusCode());
-        static::assertEquals($countTasksBeforeAdd+1, count($this->entityManager->getRepository(Task::class)->findAllTaskNotDone()));
+        static::assertEquals($countTasksBeforeAdd+1, count($this->entityManager->getRepository(Task::class)->findAllTask(0)));
 
     }
 
@@ -161,7 +161,7 @@ final class TaskControllerFunctionalTest extends DataFixturesTestCase
     {
         $this::createAuthenticatedRoleUser();
 
-        $tasksNotDone = $this->entityManager->getRepository(Task::class)->findAllTaskAreDone();
+        $tasksNotDone = $this->entityManager->getRepository(Task::class)->findAllTask(1);
 
 
         foreach ($tasksNotDone as $task) {
