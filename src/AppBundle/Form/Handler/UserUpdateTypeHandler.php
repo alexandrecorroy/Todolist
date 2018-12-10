@@ -36,21 +36,14 @@ final class UserUpdateTypeHandler extends FormTypeHandler
     private $mailer;
 
     /**
-     * @var FormFactoryInterface
-     */
-    private $formFactory;
-
-    /**
      * {@inheritdoc}
      */
     public function __construct(
         UserRepositoryInterface $repository,
-        MailerInterface $mailer,
-        FormFactoryInterface $formFactory
+        MailerInterface $mailer
     ) {
         $this->repository  = $repository;
         $this->mailer      = $mailer;
-        $this->formFactory = $formFactory;
     }
 
     /**
@@ -66,7 +59,8 @@ final class UserUpdateTypeHandler extends FormTypeHandler
     /**
      * {@inheritdoc}
      */
-    public function createForm($user): FormInterface {
-        return $this->formFactory->create(UserRegistrationType::class, $user);
+    public function getFormType(): String
+    {
+        return UserRegistrationType::class;
     }
 }

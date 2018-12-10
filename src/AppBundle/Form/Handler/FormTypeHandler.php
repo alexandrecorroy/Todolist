@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace AppBundle\Form\Handler;
 
+use Doctrine\Common\Annotations\Annotation\Required;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,6 +30,11 @@ abstract class FormTypeHandler
     private $form;
 
     /**
+     * @var FormFactoryInterface
+     */
+    private $formFactory;
+
+    /**
      * @param Request $request
      * @param $entity
      *
@@ -38,13 +45,11 @@ abstract class FormTypeHandler
         $entity
     ): bool {
 
-        $form = $this->createForm($entity);
+        $this->form = $this->formFactory->create($this->getFormType(), $entity);
 
-        $form->handleRequest($request);
+        $this->form->handleRequest($request);
 
-        $this->form = $form;
-
-        if($form->isSubmitted() && $form->isValid())
+        if($this->form->isSubmitted() && $this->form->isValid())
         {
             $this::onSuccess($entity);
 
@@ -63,11 +68,12 @@ abstract class FormTypeHandler
     }
 
     /**
-     * @return FormInterface
+     * @Required
+     * @param FormFactoryInterface $formFactory
      */
-    public function returnForm(): FormInterface
+    public function getFormFactory(FormFactoryInterface $formFactory)
     {
-        return $this->form;
+        $this->formFactory = $formFactory;
     }
 
     /**
@@ -76,10 +82,8 @@ abstract class FormTypeHandler
     abstract public function onSuccess($entity): void;
 
     /**
-     * @param $entity
-     *
-     * @return FormInterface
+     * @return String
      */
-    abstract public function createForm($entity): FormInterface;
+    abstract public function getFormType(): String;
 
 }

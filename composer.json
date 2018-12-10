@@ -42,7 +42,9 @@
         "symfony/swiftmailer-bundle": "^2.6.4",
         "twig/twig": "^1.0||^2.0",
         "phpunit/phpunit": "^7.4",
-        "symfony/phpunit-bridge": "*@dev"
+        "symfony/phpunit-bridge": "*@dev",
+        "snc/redis-bundle": "^2.1",
+        "predis/predis": "^1.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

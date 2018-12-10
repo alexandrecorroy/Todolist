@@ -49,25 +49,18 @@ final class UserRegistrationTypeHandler extends FormTypeHandler
     private $mailer;
 
     /**
-     * @var FormFactoryInterface
-     */
-    private $formFactory;
-
-    /**
      * {@inheritdoc}
      */
     public function __construct(
         EncoderFactoryInterface $encoder,
         UserRepositoryInterface $repository,
         PasswordGeneratorInterface $passwordGenerator,
-        MailerInterface $mailer,
-        FormFactoryInterface $formFactory
+        MailerInterface $mailer
     ) {
         $this->encoder           = $encoder;
         $this->repository        = $repository;
         $this->passwordGenerator = $passwordGenerator;
         $this->mailer            = $mailer;
-        $this->formFactory       = $formFactory;
     }
 
     /**
@@ -91,7 +84,8 @@ final class UserRegistrationTypeHandler extends FormTypeHandler
     /**
      * {@inheritdoc}
      */
-    public function createForm($user): FormInterface {
-        return $this->formFactory->create(UserRegistrationType::class, $user);
+    public function getFormType(): String
+    {
+        return UserRegistrationType::class;
     }
 }

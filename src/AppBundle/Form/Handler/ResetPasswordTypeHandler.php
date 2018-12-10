@@ -33,11 +33,6 @@ final class ResetPasswordTypeHandler extends FormTypeHandler
     private $repository;
 
     /**
-     * @var FormFactoryInterface
-     */
-    private $formFactory;
-
-    /**
      * @var MailerInterface
      */
     private $mailer;
@@ -57,13 +52,11 @@ final class ResetPasswordTypeHandler extends FormTypeHandler
      */
     public function __construct(
         UserRepositoryInterface $repository,
-        FormFactoryInterface $formFactory,
         MailerInterface $mailer,
         TokenGeneratorInterface $token,
         EncoderFactoryInterface $encoder
     ) {
         $this->repository   = $repository;
-        $this->formFactory  = $formFactory;
         $this->mailer       = $mailer;
         $this->token        = $token;
         $this->encoder      = $encoder;
@@ -91,8 +84,8 @@ final class ResetPasswordTypeHandler extends FormTypeHandler
     /**
      * {@inheritdoc}
      */
-    public function createForm($user): FormInterface
+    public function getFormType(): String
     {
-        return $this->formFactory->create(ResetPasswordType::class, $user);
+        return ResetPasswordType::class;
     }
 }

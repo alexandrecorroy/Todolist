@@ -36,21 +36,14 @@ final class TaskTypeHandler extends FormTypeHandler
     private $tokenStorage;
 
     /**
-     * @var FormFactoryInterface
-     */
-    private $formFactory;
-
-    /**
      * {@inheritdoc}
      */
     public function __construct(
         TaskRepositoryInterface $repository,
-        TokenStorageInterface $tokenStorage,
-        FormFactoryInterface $formFactory
+        TokenStorageInterface $tokenStorage
     ) {
         $this->repository   = $repository;
         $this->tokenStorage = $tokenStorage;
-        $this->formFactory  = $formFactory;
     }
 
     /**
@@ -68,8 +61,8 @@ final class TaskTypeHandler extends FormTypeHandler
     /**
      * {@inheritdoc}
      */
-    public function createForm($task): FormInterface
+    public function getFormType(): String
     {
-        return $this->formFactory->create(TaskAddType::class, $task);
+        return TaskAddType::class;
     }
 }
