@@ -25,7 +25,8 @@ final class TaskController extends Controller
      */
     public function listTaskNotDoneAction(TaskRepositoryInterface $repository): Response
     {
-        return $this->render('task/list.html.twig', ['tasks' => $repository->findAllTask(0)]);
+        $response = $this->render('task/list.html.twig', ['tasks' => $repository->findAllTask(0)]);
+        return $response->setEtag(md5($response));
     }
 
     /**
@@ -37,7 +38,8 @@ final class TaskController extends Controller
      */
     public function listTaskDoneAction(TaskRepositoryInterface $repository): Response
     {
-        return $this->render('task/list.html.twig', ['tasks' => $repository->findAllTask(1)]);
+        $response = $this->render('task/list.html.twig', ['tasks' => $repository->findAllTask(1)]);
+        return $response->setEtag(md5($response));
     }
 
     /**
@@ -50,9 +52,7 @@ final class TaskController extends Controller
      */
     public function createAction(Request $request, TaskTypeHandler $handler): Response
     {
-        $task = new Task();
-
-        if ($handler->handle($request, $task)) {
+        if ($handler->handle($request, new Task())) {
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
 
             return $this->redirectToRoute('task_list_not_done');

@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @ORM\Table
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TaskRepository")
- *
+ * @ORM\EntityListeners({"AppBundle\DoctrineListener\TaskListener"})
  */
 class Task implements TaskInterface
 {

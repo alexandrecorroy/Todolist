@@ -55,10 +55,9 @@ final class UserRepository extends ServiceEntityRepository implements UserReposi
             ->setParameters([
                 'email' => $email
             ])
-            ->getQuery()
-            ->getOneOrNullResult();
+            ->getQuery();
 
-        return $query;
+        return $query->getOneOrNullResult();
     }
 
     /**
@@ -71,10 +70,10 @@ final class UserRepository extends ServiceEntityRepository implements UserReposi
             ->setParameters([
                 'token' => $token
             ])
-            ->getQuery()
-            ->getOneOrNullResult();
+            ->getQuery();
 
-        return $query;
+        return $query->getOneOrNullResult();
+
     }
 
     /**
@@ -83,9 +82,10 @@ final class UserRepository extends ServiceEntityRepository implements UserReposi
     public function listUsers(): ?array
     {
         $query = $this->createQueryBuilder('u')
-            ->getQuery()
-            ->getResult();
+            ->getQuery();
 
-        return $query;
+        $query->useResultCache(true, 3600, 'findAllUser');
+
+        return $query->getResult();
     }
 }

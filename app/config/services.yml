@@ -26,3 +26,19 @@ services:
   AppBundle\Service\Mailer:
     arguments:
       $mailerFrom: '%mailer_from%'
+
+  AppBundle\DoctrineListener\TaskListener:
+    arguments:
+      - "@snc_redis.doctrine"
+    tags:
+      - { name: doctrine.event_listener, event: postFlush }
+
+  AppBundle\DoctrineListener\UserListener:
+    arguments:
+      - "@snc_redis.doctrine"
+    tags:
+      - { name: doctrine.event_listener, event: postFlush }
+
+  AppBundle\Listener\ResponseListener:
+    tags:
+      - { name: kernel.event_listener, event: kernel.response, priority: -1001 }

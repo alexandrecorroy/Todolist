@@ -82,9 +82,10 @@ final class TaskRepository extends ServiceEntityRepository implements TaskReposi
             ->setParameters([
                 'isDone' => $isDone
             ])
-            ->getQuery()
-            ->getResult();
+            ->getQuery();
 
-        return $query;
+        $query->useResultCache(true, 3600, 'findAllTask'.$isDone);
+
+        return $query->getResult();
     }
 }

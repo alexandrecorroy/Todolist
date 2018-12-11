@@ -51,7 +51,7 @@ abstract class FormTypeHandler
 
         if($this->form->isSubmitted() && $this->form->isValid())
         {
-            $this::onSuccess($entity);
+            $this->onSuccess($entity);
 
             return true;
         }

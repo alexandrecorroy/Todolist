@@ -25,7 +25,8 @@ final class UserController extends Controller
      */
     public function listAction(UserRepositoryInterface $repository): Response
     {
-        return $this->render('user/list.html.twig', ['users' => $repository->listUsers()]);
+        $response = $this->render('user/list.html.twig', ['users' => $repository->listUsers()]);
+        return $response->setEtag(md5($response));
     }
 
     /**
@@ -38,9 +39,7 @@ final class UserController extends Controller
      */
     public function createAction(Request $request, UserRegistrationTypeHandler $handler): Response
     {
-        $user = new User();
-
-        if ($handler->handle($request, $user)) {
+        if ($handler->handle($request, new User())) {
 
             $this->addFlash('success', "L'utilisateur a bien été ajouté.");
 

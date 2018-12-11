@@ -46,9 +46,7 @@ final class SecurityController extends Controller
      */
     public function forgotPasswordAction(Request $request, ForgotPasswordTypeHandler $handler, UserRepositoryInterface $repository): Response
     {
-        $user = $repository->getUserByEmail($request->request->get('forgot_password')['email']);
-
-        if($handler->handle($request, $user))
+        if($handler->handle($request, $repository->getUserByEmail($request->request->get('forgot_password')['email'])))
         {
             $this->addFlash('success', 'Un email a été envoyé pour renouveler votre mot de passe.');
 

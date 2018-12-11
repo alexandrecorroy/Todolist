@@ -7,16 +7,16 @@
             "": "src/",
             "AppBundle\\DataFixtures\\": "src/DataFixtures/",
             "AppBundle\\Controller\\": "src/Controller/",
-            "AppBundle\\DoctrineListener\\": "src/DoctrineListener/",
+            "AppBundle\\Security\\": "src/Security/",
             "AppBundle\\Entity\\": "src/Entity/",
             "AppBundle\\Entity\\Interfaces\\": "src/Entity/Interfaces/",
             "AppBundle\\Form\\": "src/Form/",
             "AppBundle\\Form\\Handler\\": "src/Form/Handler/",
-            "AppBundle\\Form\\Handler\\Interfaces\\": "src/Form/Handler/Interfaces/",
             "AppBundle\\Repository\\": "src/Repository/",
             "AppBundle\\Repository\\Interfaces\\": "src/Repository/Interfaces/",
             "AppBundle\\Service\\": "src/Service/",
-            "AppBundle\\Service\\Interfaces\\": "src/Service/Interfaces/"
+            "AppBundle\\Service\\Interfaces\\": "src/Service/Interfaces/",
+            "AppBundle\\Listener\\": "src/Listener/"
         },
         "classmap": [
             "app/AppKernel.php",
