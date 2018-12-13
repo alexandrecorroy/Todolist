@@ -49,7 +49,7 @@
 <div class="page">
     <div class="content">
         <div class="report-details">
-            Created at 2018-12-06 20:00:18        , with PHPMetrics v2.4.1 (<a href="https://twitter.com/Halleck45">Jean-François Lépine</a>).
+            Created at 2018-12-11 11:31:01        , with PHPMetrics v2.4.1 (<a href="https://twitter.com/Halleck45">Jean-François Lépine</a>).
         </div>
 
 
@@ -301,8 +301,7 @@
             "\\AppBundle\\Repository\\Interfaces\\UserRepositoryInterface",
             "\\Symfony\\Component\\Form\\FormFactoryInterface",
             "\\AppBundle\\Service\\Interfaces\\MailerInterface",
-            "\\AppBundle\\Service\\Interfaces\\TokenGeneratorInterface",
-            "\\Symfony\\Component\\Form\\FormInterface"
+            "\\AppBundle\\Service\\Interfaces\\TokenGeneratorInterface"
         ]
     },
     {
@@ -324,11 +323,9 @@
         "relations": [
             "\\AppBundle\\Form\\Handler\\FormTypeHandler",
             "\\AppBundle\\Repository\\Interfaces\\UserRepositoryInterface",
-            "\\Symfony\\Component\\Form\\FormFactoryInterface",
             "\\AppBundle\\Service\\Interfaces\\MailerInterface",
             "\\AppBundle\\Service\\Interfaces\\TokenGeneratorInterface",
-            "\\Symfony\\Component\\Security\\Core\\Encoder\\EncoderFactoryInterface",
-            "\\Symfony\\Component\\Form\\FormInterface"
+            "\\Symfony\\Component\\Security\\Core\\Encoder\\EncoderFactoryInterface"
         ]
     },
     {
@@ -356,9 +353,7 @@
         "relations": [
             "\\AppBundle\\Form\\Handler\\FormTypeHandler",
             "\\AppBundle\\Repository\\Interfaces\\TaskRepositoryInterface",
-            "\\Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorageInterface",
-            "\\Symfony\\Component\\Form\\FormFactoryInterface",
-            "\\Symfony\\Component\\Form\\FormInterface"
+            "\\Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorageInterface"
         ]
     },
     {
@@ -398,9 +393,7 @@
             "\\Symfony\\Component\\Security\\Core\\Encoder\\EncoderFactoryInterface",
             "\\AppBundle\\Repository\\Interfaces\\UserRepositoryInterface",
             "\\AppBundle\\Service\\Interfaces\\PasswordGeneratorInterface",
-            "\\AppBundle\\Service\\Interfaces\\MailerInterface",
-            "\\Symfony\\Component\\Form\\FormFactoryInterface",
-            "\\Symfony\\Component\\Form\\FormInterface"
+            "\\AppBundle\\Service\\Interfaces\\MailerInterface"
         ]
     },
     {
@@ -409,9 +402,7 @@
         "relations": [
             "\\AppBundle\\Form\\Handler\\FormTypeHandler",
             "\\AppBundle\\Repository\\Interfaces\\UserRepositoryInterface",
-            "\\AppBundle\\Service\\Interfaces\\MailerInterface",
-            "\\Symfony\\Component\\Form\\FormFactoryInterface",
-            "\\Symfony\\Component\\Form\\FormInterface"
+            "\\AppBundle\\Service\\Interfaces\\MailerInterface"
         ]
     },
     {
@@ -447,6 +438,16 @@
             "\\Doctrine\\Common\\Persistence\\ObjectManager",
             "\\AppBundle\\Entity\\Task"
         ]
+    },
+    {
+        "name": "\\AppBundle\\DoctrineListener\\TaskListener",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\AppBundle\\DoctrineListener\\UserListener",
+        "size": 3000,
+        "relations": []
     },
     {
         "name": "\\AppBundle\\Entity\\Interfaces\\TaskInterface",
@@ -512,17 +513,12 @@
         "relations": []
     },
     {
-        "name": "\\Symfony\\Component\\Form\\FormInterface",
-        "size": 3000,
-        "relations": []
-    },
-    {
-        "name": "\\this",
-        "size": 3000,
-        "relations": []
-    },
-    {
         "name": "\\Symfony\\Component\\Form\\FormView",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\Doctrine\\Common\\Annotations\\Annotation\\Required",
         "size": 3000,
         "relations": []
     },
@@ -566,6 +562,18 @@
         ]
     },
     {
+        "name": "\\AppBundle\\Listener\\ResponseListener",
+        "size": 3000,
+        "relations": [
+            "\\Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent"
+        ]
+    },
+    {
+        "name": "\\Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent",
+        "size": 3000,
+        "relations": []
+    },
+    {
         "name": "\\AppBundle\\Repository\\TaskRepository",
         "size": 3000,
         "relations": [
@@ -589,6 +597,11 @@
     },
     {
         "name": "\\parent",
+        "size": 3000,
+        "relations": []
+    },
+    {
+        "name": "\\this",
         "size": 3000,
         "relations": []
     },

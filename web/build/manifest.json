@@ -1,0 +1,10 @@
+{
+  "build/app.css": "/Todolist/web/build/app.css",
+  "build/app.js": "/Todolist/web/build/app.js",
+  "build/runtime.js": "/Todolist/web/build/runtime.js",
+  "build/fonts/glyphicons-halflings-regular.woff2": "/Todolist/web/build/fonts/glyphicons-halflings-regular.448c34a5.woff2",
+  "build/fonts/glyphicons-halflings-regular.ttf": "/Todolist/web/build/fonts/glyphicons-halflings-regular.e18bbf61.ttf",
+  "build/fonts/glyphicons-halflings-regular.eot": "/Todolist/web/build/fonts/glyphicons-halflings-regular.f4769f9b.eot",
+  "build/fonts/glyphicons-halflings-regular.woff": "/Todolist/web/build/fonts/glyphicons-halflings-regular.fa277232.woff",
+  "build/images/glyphicons-halflings-regular.svg": "/Todolist/web/build/images/glyphicons-halflings-regular.89889688.svg"
+}

@@ -19,8 +19,6 @@ use AppBundle\Form\UserRegistrationType;
 use AppBundle\Repository\Interfaces\UserRepositoryInterface;
 use AppBundle\Service\Interfaces\MailerInterface;
 use AppBundle\Service\Interfaces\PasswordGeneratorInterface;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 /**
@@ -49,7 +47,12 @@ final class UserRegistrationTypeHandler extends FormTypeHandler
     private $mailer;
 
     /**
-     * {@inheritdoc}
+     * UserRegistrationTypeHandler constructor.
+     *
+     * @param EncoderFactoryInterface $encoder
+     * @param UserRepositoryInterface $repository
+     * @param PasswordGeneratorInterface $passwordGenerator
+     * @param MailerInterface $mailer
      */
     public function __construct(
         EncoderFactoryInterface $encoder,

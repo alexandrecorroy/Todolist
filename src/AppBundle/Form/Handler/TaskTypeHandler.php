@@ -16,8 +16,6 @@ namespace AppBundle\Form\Handler;
 use AppBundle\Entity\Interfaces\TaskInterface;
 use AppBundle\Form\TaskAddType;
 use AppBundle\Repository\Interfaces\TaskRepositoryInterface;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
@@ -36,7 +34,10 @@ final class TaskTypeHandler extends FormTypeHandler
     private $tokenStorage;
 
     /**
-     * {@inheritdoc}
+     * TaskTypeHandler constructor.
+     *
+     * @param TaskRepositoryInterface $repository
+     * @param TokenStorageInterface $tokenStorage
      */
     public function __construct(
         TaskRepositoryInterface $repository,

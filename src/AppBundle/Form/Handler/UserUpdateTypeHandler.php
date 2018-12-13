@@ -36,7 +36,10 @@ final class UserUpdateTypeHandler extends FormTypeHandler
     private $mailer;
 
     /**
-     * {@inheritdoc}
+     * UserUpdateTypeHandler constructor.
+     *
+     * @param UserRepositoryInterface $repository
+     * @param MailerInterface $mailer
      */
     public function __construct(
         UserRepositoryInterface $repository,
