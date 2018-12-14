@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace AppBundle\Entity\Interfaces;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Interface UserInterface.
  */
@@ -77,4 +79,9 @@ interface UserInterface extends \Symfony\Component\Security\Core\User\UserInterf
      * @return string
      */
     public function getToken(): string;
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getTasks(): ArrayCollection;
 }

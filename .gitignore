@@ -16,5 +16,5 @@
 /web/bundles/
 /myreport/
 /coverage-result/
-var/
+var/cache
 node_modules

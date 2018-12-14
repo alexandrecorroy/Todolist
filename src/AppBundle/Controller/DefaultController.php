@@ -18,8 +18,6 @@ final class DefaultController extends Controller
      */
     public function indexAction(): Response
     {
-        $response = $this->render('default/index.html.twig');
-
-        return $response->setSharedMaxAge(7200);
+        return $this->render('default/index.html.twig');
     }
 }

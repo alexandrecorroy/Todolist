@@ -92,14 +92,6 @@ class Task implements TaskInterface
     /**
      * {@inheritdoc}
      */
-    public function setCreatedAt(\DateTime $createdAt): void
-    {
-        $this->createdAt = $createdAt;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getTitle(): ?string
     {
         return $this->title;

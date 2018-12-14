@@ -25,8 +25,7 @@ final class TaskController extends Controller
      */
     public function listTaskNotDoneAction(TaskRepositoryInterface $repository): Response
     {
-        $response = $this->render('task/list.html.twig', ['tasks' => $repository->findAllTask(0)]);
-        return $response->setEtag(md5($response));
+        return $this->render('task/list.html.twig', ['tasks' => $repository->findAllTask(0)]);
     }
 
     /**
@@ -38,8 +37,7 @@ final class TaskController extends Controller
      */
     public function listTaskDoneAction(TaskRepositoryInterface $repository): Response
     {
-        $response = $this->render('task/list.html.twig', ['tasks' => $repository->findAllTask(1)]);
-        return $response->setEtag(md5($response));
+        return $this->render('task/list.html.twig', ['tasks' => $repository->findAllTask(1)]);
     }
 
     /**

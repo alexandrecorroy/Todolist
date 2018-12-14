@@ -29,11 +29,6 @@ interface TaskInterface
     public function getCreatedAt(): \DateTime;
 
     /**
-     * @param \DateTime $createdAt
-     */
-    public function setCreatedAt(\DateTime $createdAt): void;
-
-    /**
      * @return string|null
      */
     public function getTitle(): ?string;

@@ -1,10 +1,11 @@
 {
     "name": "saro0h/to-do-list",
+    "description": "a todolist project",
     "license": "proprietary",
     "type": "project",
     "autoload": {
         "psr-4": {
-            "": "src/",
+            "src\\": "src/",
             "AppBundle\\DataFixtures\\": "src/DataFixtures/",
             "AppBundle\\Controller\\": "src/Controller/",
             "AppBundle\\Security\\": "src/Security/",
@@ -41,15 +42,16 @@
         "symfony/monolog-bundle": "^3.1.0",
         "symfony/swiftmailer-bundle": "^2.6.4",
         "twig/twig": "^1.0||^2.0",
-        "phpunit/phpunit": "^7.4",
-        "symfony/phpunit-bridge": "*@dev",
         "snc/redis-bundle": "^2.1",
-        "predis/predis": "^1.1",
-        "symfony/webpack-encore-pack": "^1.0"
+        "predis/predis": "^1.1"
+
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
-        "doctrine/doctrine-fixtures-bundle": "^3.0.4"
+        "doctrine/doctrine-fixtures-bundle": "^3.0.4",
+        "phpunit/phpunit": "^7.4",
+        "symfony/phpunit-bridge": "^4.0",
+        "symfony/webpack-encore-pack": "^1.0"
     },
     "scripts": {
         "symfony-scripts": [

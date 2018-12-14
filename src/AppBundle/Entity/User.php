@@ -48,7 +48,6 @@ class User implements UserInterface
     private $isAdmin;
 
     /**
-     * One product has many features. This is the inverse side.
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Task", mappedBy="user", orphanRemoval=true)
      */
     private $tasks;
@@ -65,6 +64,14 @@ class User implements UserInterface
     {
         $this->isAdmin = false;
         $this->tasks = new ArrayCollection();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTasks(): ArrayCollection
+    {
+        return $this->tasks;
     }
 
     /**

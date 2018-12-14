@@ -25,8 +25,7 @@ final class UserController extends Controller
      */
     public function listAction(UserRepositoryInterface $repository): Response
     {
-        $response = $this->render('user/list.html.twig', ['users' => $repository->listUsers()]);
-        return $response->setEtag(md5($response));
+        return $this->render('user/list.html.twig', ['users' => $repository->listUsers()]);
     }
 
     /**
