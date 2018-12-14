@@ -48,7 +48,7 @@ interface TaskRepositoryInterface
      *
      * @return array|null
      */
-    public function findAllTask(int $isDone): ?array;
+    public function findAllTask($isDone): ?array;
 
     /**
      * @param TaskInterface $task
