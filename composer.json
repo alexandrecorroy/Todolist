@@ -5,7 +5,7 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "src\\": "src/",
+            "": "src/",
             "AppBundle\\DataFixtures\\": "src/DataFixtures/",
             "AppBundle\\Controller\\": "src/Controller/",
             "AppBundle\\Security\\": "src/Security/",
