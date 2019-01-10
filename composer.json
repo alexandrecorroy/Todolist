@@ -16,8 +16,7 @@
             "AppBundle\\Repository\\": "src/Repository/",
             "AppBundle\\Repository\\Interfaces\\": "src/Repository/Interfaces/",
             "AppBundle\\Service\\": "src/Service/",
-            "AppBundle\\Service\\Interfaces\\": "src/Service/Interfaces/",
-            "AppBundle\\Listener\\": "src/Listener/"
+            "AppBundle\\Service\\Interfaces\\": "src/Service/Interfaces/"
         },
         "classmap": [
             "app/AppKernel.php",
@@ -43,14 +42,14 @@
         "symfony/swiftmailer-bundle": "^2.6.4",
         "twig/twig": "^1.0||^2.0",
         "snc/redis-bundle": "^2.1",
-        "predis/predis": "^1.1"
+        "predis/predis": "^1.1",
+        "symfony/phpunit-bridge": "*@dev"
 
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
         "doctrine/doctrine-fixtures-bundle": "^3.0.4",
         "phpunit/phpunit": "^7.4",
-        "symfony/phpunit-bridge": "^4.0",
         "symfony/webpack-encore-pack": "^1.0"
     },
     "scripts": {
@@ -78,6 +77,12 @@
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
+        }
+    },
+    "repositories": {
+        "phpunit-bridge": {
+            "type": "path",
+            "url": "C:\\wamp64\\www\\Todolist\\vendor\\symfony\\phpunit-bridge"
         }
     }
 }
