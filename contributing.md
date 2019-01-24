@@ -14,9 +14,38 @@ If you wish to contribute to `todolist` project, please be sure to read to the f
  -  CleanCode : [Clean Code PHP](https://github.com/errorname/clean-code-php)
  -  Webpack Encore : [How to install Webpack Encore](https://symfony.com/doc/current/frontend/encore/installation.html)
  -  Code Sniffer : [How to install Code Sniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+ -  Git : [Create a pull request](https://help.github.com/articles/creating-a-pull-request)
 
 If you are working on new features, or refactoring an existing component, please create an issue first, so we can discuss
 it.
+
+#Submit an issue
+
+The ticketing system is also hosted on GitHub:
+
+TodoList : https://github.com/alexandrecorroy/Todolist/issues
+
+#Make a Pull Request
+
+The best way to submit a patch is to make a Pull Request on GitHub. First, you should create a new branch from the master. Assuming you are in your local Propel project:
+  ```sh
+$ git checkout -b fix-my-patch master
+  ```
+Now you can write your patch in this branch. Don’t forget to provide tests with your fix to prove both the bug and the patch. It will ease the process to accept or refuse a Pull Request.
+
+When you’re done, you have to rebase your branch to provide a clean and safe Pull Request.
+  ```sh
+$ git remote add upstream https://github.com/alexandrecorroy/Todolist
+$ git checkout master
+$ git pull --ff-only upstream master
+$ git checkout fix-my-patch
+$ git rebase master
+  ```
+Once done, you can submit the Pull Request by pushing your branch to your fork:
+  ```sh
+$ git push origin fix-my-patch
+  ```
+Go to your fork of the project on GitHub and switch to the patched branch (here in the above example, fix-my-patch) and click on the “Compare and pull request” button. Add a short description to this Pull Request and submit it.
 
 ## WebPack Encore
 
