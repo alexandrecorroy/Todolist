@@ -1,6 +1,7 @@
 services:
   web:
-    build: .
+    image: yorkknew/todolist-app:1.0
+    restart: always
     ports:
       - "8080:80"
     volumes:

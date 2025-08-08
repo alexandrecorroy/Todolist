@@ -1,3 +1,4 @@
+# This file is auto-generated during the composer install
 parameters:
     database_host: db
     database_port: 3306
@@ -12,4 +13,3 @@ parameters:
     mailer_encryption: ssl
     mailer_from: contact@todolist.com
     mailer_port: 465
-    redis_host: redis://redis # or redis://127.0.0.1 for local redis
