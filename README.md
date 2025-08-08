@@ -81,7 +81,7 @@ password: "admin"
 
 Testing the application with Docker :
 ```
-docker-compose up -d --build
+docker-compose up -d
 ```
 
 Then, open http://localhost:8080
