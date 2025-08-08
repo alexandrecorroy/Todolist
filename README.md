@@ -2,6 +2,12 @@
 
 It's a Symfony 3.4 project. Improve a todolist application.
 
+---
+
+![Aperçu de la page d'accueil](docs/screenshot-home.png)
+
+---
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
