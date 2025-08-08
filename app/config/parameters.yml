@@ -13,4 +13,4 @@ parameters:
     mailer_encryption: ssl
     mailer_from: contact@todolist.com
     mailer_port: 465
-    redis_host: redis//redis
+    redis_host: redis://redis
