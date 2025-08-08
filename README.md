@@ -77,6 +77,15 @@ username: "admin"
 password: "admin"
 ```
 
+## Docker
+
+Testing the application with Docker :
+```
+docker-compose up -d --build
+```
+
+Then, open http://localhost:8080
+
 ## Tests
 
 Testing the application with PHPUnit :

@@ -1,15 +1,18 @@
 {
   "devDependencies": {
-    "@symfony/webpack-encore": "^0.22.2",
-    "optimize-css-assets-webpack-plugin": "^5.0.1",
-    "uglifyjs-webpack-plugin": "^2.0.1"
+    "@symfony/webpack-encore": "^2.0.0",
+    "cross-env": "^10.0.0",
+    "css-minimizer-webpack-plugin": "^7.0.2",
+    "sass-loader": "^13.2.0",
+    "terser-webpack-plugin": "^5.3.14"
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "fs": "0.0.1-security",
     "jquery": "^3.2.1",
-    "node-sass": "^4.11.0",
     "popper.js": "^1.14.6",
-    "sass-loader": "^7.1.0"
+    "sass": "^1.66.1"
+  },
+  "scripts": {
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider yarn encore production"
   }
 }

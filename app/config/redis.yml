@@ -4,11 +4,11 @@ snc_redis:
     default:
       type: predis
       alias: default
-      dsn: redis://127.0.0.1
+      dsn: "%redis_host%"
     doctrine:
       type: predis
       alias: doctrine
-      dsn: redis://127.0.0.1
+      dsn: "%redis_host%"
   doctrine:
     metadata_cache:
       client: doctrine

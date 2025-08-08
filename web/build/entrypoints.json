@@ -2,11 +2,11 @@
   "entrypoints": {
     "app": {
       "js": [
-        "/Todolist/web/build/runtime.js",
-        "/Todolist/web/build/app.js"
+        "/build/runtime.js",
+        "/build/app.js"
       ],
       "css": [
-        "/Todolist/web/build/app.css"
+        "/build/app.css"
       ]
     }
   }
